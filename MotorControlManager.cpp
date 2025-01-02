@@ -30,6 +30,33 @@ void MotorControlManager::getDriveFin(int* fin_status) {
 	}
 }
 
+void MotorControlManager::setDialogWnd(CWnd* pDlgWnd)
+{
+	m_pDlgWnd = pDlgWnd;
+	axis1.setDialogWnd(pDlgWnd);
+	axis2.setDialogWnd(pDlgWnd);
+	axis1.test();
+}
+
+void MotorControlManager::postMsg(CString message)
+{
+	if (m_pDlgWnd && ::IsWindow(m_pDlgWnd->GetSafeHwnd())) {
+		// 메시지를 동적 메모리에 복사
+		CString* pMessage = new CString(message);
+
+		// 메시지를 메인 윈도우로 보냄
+		::PostMessage(m_pDlgWnd->GetSafeHwnd(), WM_WORKER_THREAD_MESSAGE_LOGGING, reinterpret_cast<WPARAM>(pMessage), 0);
+
+		TRACE(_T("메세지 보냄: %s\n"), message);
+	}
+	else {
+		// TRACE 또는 로그 출력
+		TRACE(_T("PostMessage failed: invalid window handle.\n"));
+	}
+}
+
+
+
 
 
 void MotorControlManager::open()
@@ -38,11 +65,13 @@ void MotorControlManager::open()
 	if (ans != SSC_OK)
 	{
 		TRACE(_T("sscOpen failure. sscGetLastError=0x%08X\n"), sscGetLastError());
+		postMsg(_T("open fail"));
 		return;
 	}
 	else
 	{
 		TRACE(_T("sscOpen success\n"));
+		postMsg(_T("open success"));
 	}
 }
 
@@ -276,6 +305,19 @@ void MotorControlManager::positionMove(CString inputText[3])
 	}
 
 	
+}
+
+void MotorControlManager::homeReturn()
+{
+	ans = sscHomeReturnStart(board_id, channel, 1);
+	if (ans != SSC_OK)
+	{
+		TRACE(_T("homeReturn failure. sscGetLastError=0x%08X\n"), sscGetLastError());
+	}
+	else
+	{
+		TRACE(_T("homeReturn success\n"));
+	}
 }
 
 void MotorControlManager::emergencyStop()

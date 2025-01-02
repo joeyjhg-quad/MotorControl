@@ -4,6 +4,28 @@
 #define DRIVE_FIN_TIMEOUT				(10000)
 #define INTERRUPT_THREAD_PRIORITY		THREAD_PRIORITY_TIME_CRITICAL
 
+void BaseAxis::setDialogWnd(CWnd* pDlgWnd)
+{
+	m_pDlgWnd = pDlgWnd;
+}
+
+void BaseAxis::postMsg(CString message)
+{
+	if (m_pDlgWnd && ::IsWindow(m_pDlgWnd->GetSafeHwnd())) {
+		// 메시지를 동적 메모리에 복사
+		CString* pMessage = new CString(message);
+
+		// 메시지를 메인 윈도우로 보냄
+		::PostMessage(m_pDlgWnd->GetSafeHwnd(), WM_WORKER_THREAD_MESSAGE_LOGGING, reinterpret_cast<WPARAM>(pMessage), 0);
+
+		TRACE(_T("메세지 보냄: %s\n"), message);
+	}
+	else {
+		// TRACE 또는 로그 출력
+		TRACE(_T("PostMessage failed: invalid window handle.\n"));
+	}
+}
+
 void BaseAxis::setPoint(PNT_DATA_EX PntData, int ptnnum)
 {
 	//data = PntData;
@@ -144,4 +166,9 @@ void BaseAxis::checkAlarm()
 			break;
 		}
 	}
+}
+
+void BaseAxis::test()
+{
+	postMsg(_T("Axis Test"));
 }

@@ -7,9 +7,13 @@ protected:
     int ans = 0;
 
     PNT_DATA_EX data;
+    CWnd* m_pDlgWnd = nullptr; // UI 핸들
 public:
     BaseAxis(int axisNum) : axisNumber(axisNum) {} // 축 번호 설정
     virtual ~BaseAxis() {}
+
+    void setDialogWnd(CWnd* pDlgWnd);
+    void postMsg(CString message);
 
     void setPoint(PNT_DATA_EX PntData, int ptnnum = 0);
     void getPoint(PNT_DATA_EX& PntData, int ptnnum = 0);
@@ -30,5 +34,6 @@ public:
     void checkAlarm();
     // 가상 초기화 함수 (필요시 오버라이드)
     //virtual void initializeMotor() = 0;
+    void test();
 };
 

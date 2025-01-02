@@ -32,6 +32,7 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	afx_msg LRESULT OnUpdatePosition(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnUpdateDirveFin(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnUpdateLog(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
 public:
 	PNT_DATA_EX		PntData;
@@ -81,4 +82,5 @@ public:
 	CStatic m_DriveFin_3;
 	CMFCButton m_Btn_EmergencyStop;
 	afx_msg void OnBnClickedButtonEmergencystop();
+	CListCtrl m_ListCtrl;
 };

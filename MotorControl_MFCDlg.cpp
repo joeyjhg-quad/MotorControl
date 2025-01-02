@@ -57,6 +57,7 @@ void CMotorControlMFCDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TEXT_STATE_DRIVE_2, m_DriveFin_2);
 	DDX_Control(pDX, IDC_TEXT_STATE_DRIVE_3, m_DriveFin_3);
 	DDX_Control(pDX, IDC_BUTTON12, m_Btn_EmergencyStop);
+	DDX_Control(pDX, IDC_LIST1, m_ListCtrl);
 }
 
 BEGIN_MESSAGE_MAP(CMotorControlMFCDlg, CDialogEx)
@@ -67,6 +68,7 @@ BEGIN_MESSAGE_MAP(CMotorControlMFCDlg, CDialogEx)
 	ON_WM_LBUTTONUP()
 	ON_MESSAGE(WM_WORKER_THREAD_MESSAGE_POSITIONSTATE, &CMotorControlMFCDlg::OnUpdatePosition)
 	ON_MESSAGE(WM_WORKER_THREAD_MESSAGE_DRIVEFIN, &CMotorControlMFCDlg::OnUpdateDirveFin)
+	ON_MESSAGE(WM_WORKER_THREAD_MESSAGE_LOGGING, &CMotorControlMFCDlg::OnUpdateLog)
 	ON_BN_CLICKED(IDC_BUTTON_ON_SERVO1, &CMotorControlMFCDlg::OnBnClickedButtonOnServo1)
 	ON_BN_CLICKED(IDC_BUTTON_OFF_SERVO1, &CMotorControlMFCDlg::OnBnClickedButtonOffServo1)
 	ON_BN_CLICKED(IDC_BUTTON_CUSTOM_X_PLUS, &CMotorControlMFCDlg::OnBnClickedButtonCustomXPlus)
@@ -125,8 +127,16 @@ BOOL CMotorControlMFCDlg::OnInitDialog()
 
 	Update_Speed();
 
+	// List Control 초기화
 
+	CRect rt;     // 리스트 컨트롤의 크기를 가져올 변수
 
+	m_ListCtrl.GetWindowRect(&rt);
+	m_ListCtrl.SetExtendedStyle(LVS_EX_GRIDLINES);   // 리스트 컨트롤에 선표시
+
+	m_ListCtrl.InsertColumn(0, TEXT("메세지"), LVCFMT_LEFT, rt.Width() * 0.6);     // 첫번째
+	m_ListCtrl.InsertColumn(1, TEXT("일시"), LVCFMT_CENTER, rt.Width() * 0.39);   // 두번째
+	//OnUpdateLog();
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
@@ -220,6 +230,33 @@ LRESULT CMotorControlMFCDlg::OnUpdateDirveFin(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
+LRESULT CMotorControlMFCDlg::OnUpdateLog(WPARAM wParam, LPARAM lParam)
+{
+	// WPARAM: 메시지 포인터
+	CString* pMessage = reinterpret_cast<CString*>(wParam);
+	if (pMessage) {
+		int num = m_ListCtrl.GetItemCount(); // 현재 항목 수를 가져옴
+
+		// 현재 시간 가져오기
+		CTime now = CTime::GetCurrentTime();
+		CString timeStamp = now.Format(_T("%Y-%m-%d %H:%M:%S"));
+
+		// 첫 번째 열: 메시지
+		m_ListCtrl.InsertItem(num, *pMessage);
+
+		// 두 번째 열: 현재 시간
+		m_ListCtrl.SetItem(num, 1, LVIF_TEXT, timeStamp, 0, 0, 0, 0);
+
+		// 동적 메모리 해제
+		delete pMessage;
+	}
+
+	return 0; // 메시지 처리 완료
+}
+
+
+
+
 void CMotorControlMFCDlg::Update_Speed()
 {
 	CString str;
@@ -231,8 +268,7 @@ void CMotorControlMFCDlg::Update_Speed()
 void CMotorControlMFCDlg::OnBnClickedButtonConnect()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	//m_ConnectState.SetWindowText(_T("test"));
-	//m_PositionStateX.SetWindowText(_T("123"));
+	motorControlManager.setDialogWnd(this);
 	motorControlManager.open();
 	motorControlManager.rebootAndStart();
 	motorControlManager.setPoint(PntData);
@@ -489,6 +525,8 @@ void CMotorControlMFCDlg::OnBnClickedButtonPositionMove()
 
 void CMotorControlMFCDlg::OnBnClickedButtonEmergencystop()
 {
-	motorControlManager.emergencyStop();
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	//motorControlManager.emergencyStop();
+
+	//원점 복귀 테스트
+	motorControlManager.homeReturn();
 }

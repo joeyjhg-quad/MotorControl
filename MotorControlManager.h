@@ -9,13 +9,16 @@ private:
 	int board_id = 0;
 	int channel = 1;
 	int ans;
-
+	CWnd* m_pDlgWnd = nullptr; // UI 핸들
 public:
 	MotorControlManager();  // 생성자 선언
 	~MotorControlManager(); // 소멸자 선언
 
 	void getCurrentPosition(long positions[3]);
 	void getDriveFin(int* fin_status);
+
+	void setDialogWnd(CWnd* pDlgWnd); // UI 핸들 설정
+	void postMsg(CString Message);
 
 	void open();
 	void rebootAndStart();
@@ -29,6 +32,7 @@ public:
 	void jogStop(int axisNum);
 	void customMove(int axisNum, long distance);
 	void positionMove(CString inputText[3]);
+	void homeReturn();
 	void emergencyStop();
 	void close();
 };
