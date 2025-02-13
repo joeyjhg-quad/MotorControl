@@ -1,0 +1,1792 @@
+//
+// Copyright (C) 2023-2024 Biofluidix GmbH
+// All Rights Reserved.
+//
+
+syntax = "proto3";
+
+package com.biofluidix.bfxclient.client.rpc;
+
+//option java_multiple_files = true;
+
+import "Protos/bfxclient-common.proto";
+
+option csharp_namespace = "gRPCBfx";
+
+/**
+ * BFX client service.
+ *
+ * This service performs droplet detection and volume calibration via the JavaFX interface.
+ */
+service BFXClientService {
+  /**
+   * Indicates that the grpc client willingly disconnected from the service. It is necessary to call this method
+   * before closing the connection to the service, otherwise the service will not be able to detect the disconnection.
+   * To disconnect from the service, the clientId must be provided.
+   */
+  rpc disconnect(DisconnectRequest) returns (DisconnectResponse) {}
+
+  /**
+   * Indicates that the grpc client requests to connect to the service. It will receive a client id if the connection
+   * was successful.Currently, only one client can be connected at a time. The client id is used to identify the client
+   * in the service because future revisions of the service might request the clientID to be specified in each request.
+   */
+  rpc connect(ConnectRequest) returns (ConnectResponse) {}
+
+  /**
+   * Indicates that the grpc client wants to reconnect to the service (in case the client crashed or the connection
+   * got lost). This method will only succeed if the client was previously connected to the service. The client id
+   * is used to identify the client in the service.
+   */
+  rpc reconnect(ReconnectRequest) returns (ReconnectResponse) {}
+
+  /**
+   * Returns the version info.
+   */
+  rpc getVersionInfo(GetVersionInfoRequest) returns (GetVersionInfoResponse) {}
+
+  /**
+   * Hides the BFX Client window.
+   */
+  rpc hideWindow(HideWindowRequest) returns (HideWindowResponse) {}
+
+  /**
+   * Shows the BFX Client window.
+   */
+  rpc showWindow(ShowWindowRequest) returns (ShowWindowResponse) {}
+
+  /**
+   * Waits until the user has clicked on the 'close-window' icon or has performed an equivalent action.
+   */
+  rpc awaitWindowCloseRequest(WindowCloseRequest) returns (WindowCloseResponse) {}
+
+  /**
+   * Shows a message dialog and waits until the user has acknowledged the message by clicking the
+   * 'OK' button or by performing an equivalent action.
+   */
+  rpc showMessageDialog(ShowMessageDialogRequest) returns (ShowMessageDialogResponse) {}
+
+  /**
+   * Shows a Yes/No-dialog and waits until the user has clicked one of the buttons.
+   */
+  rpc showYesNoDialog(ShowYesNoDialogRequest) returns (ShowYesNoDialogResponse) {}
+
+  /**
+   * Connect to core-image server (only available if strobocore auto-connect has been disabled via CLI). It is
+   * necessary to awaitCameraInitialization() before calling any other methods to ensure the camera is fully initialized.
+   */
+  rpc connectToCoreImageServer(ConnectToCoreImageServerRequest) returns (ConnectToCoreImageServerResponse) {}
+
+  /**
+   * Disconnect from core-image server.
+   */
+  rpc disconnectFromCoreImageServer(DisconnectFromCoreImageServerRequest) returns (DisconnectFromCoreImageServerResponse) {}
+
+  /**
+   * Waits until the camera has been successfully initialized.
+   */
+  rpc awaitCameraInitialization(AwaitCameraRequest) returns (AwaitCameraResponse) {}
+
+  /**
+   * Captures the reference image used for background removal. Make sure that the camera is initialized and the
+   * droplet detection/trigger mode is currently disabled.
+   *
+   * @return the requested reference image, including meta information
+   */
+  rpc captureReferenceImage(CaptureReferenceImageRequest) returns (CaptureReferenceImageResponse) {}
+
+  /**
+   * Captures the reference image used for background removal from external source.
+   */
+  rpc setAndProcessReferenceImage(SetAndProcessReferenceImageRequest) returns (SetAndProcessReferenceImageResponse) {}
+
+  /**
+   * Sets the preview image quality.
+   */
+  rpc setPreviewImageQuality(SetPreviewImageQualityRequest) returns (SetPreviewImageQualityResponse) {}
+
+  /**
+   * Returns the preview image quality settings.
+   */
+  rpc getPreviewImageQuality(GetPreviewImageQualityRequest) returns (GetPreviewImageQualityResponse) {}
+
+  /**
+   * Sets the top ROI value.
+   */
+  rpc setTopROI(SetTopROIRequest) returns (SetTopROIResponse);
+
+  /**
+   * Sets the bottom ROI value.
+   */
+  rpc setBottomROI(SetBottomROIRequest) returns (SetBottomROIResponse);
+
+  /**
+   * Sets the left ROI value.
+   */
+  rpc setLeftROI(SetLeftROIRequest) returns (SetLeftROIResponse);
+
+  /**
+   * Sets the right ROI value.
+   */
+  rpc setRightROI(SetRightROIRequest) returns (SetRightROIResponse);
+
+  /**
+   * Returns the current ROI values.
+   */
+  rpc getROI(GetROIRequest) returns (GetROIResponse);
+
+  /**
+   * Sets the droplet target height. This value is used by the position control which is part of the volume calibration.
+   */
+  rpc setDropletTargetHeight(SetDropletTargetHeightRequest) returns (SetDropletTargetHeightResponse);
+
+  /**
+   * Returns the droplet target height. This value is used by the position control which is part of the volume
+   * calibration.
+   */
+  rpc getDropletTargetHeight(GetDropletTargetHeightRequest) returns (GetDropletTargetHeightResponse);
+
+  /**
+   * Requests the calibration fot the specified volumes.
+   */
+  rpc calibrate(CalibrationRequest) returns (CalibrationResponse) {}
+
+  /**
+   * Enables or disables pos control during calib.
+   */
+  rpc setPosControl(PosControlRequest) returns (PosControlResponse) {}
+
+  /**
+   * Enables or disables droplet finding during calib.
+   */
+  rpc setFindDroplet(FindDropletRequest) returns (FindDropletResponse) {}
+
+  /**
+   * Enables or disables volume control during calib.
+   */
+  rpc setVolControl(VolControlRequest) returns (VolControlResponse) {}
+
+  /**
+   * Sets trigger delay.
+   */
+  rpc setTriggerDelay(SetTriggerDelayRequest) returns (SetTriggerDelayResponse) {}
+
+  /**
+   * Gets trigger delay.
+   */
+  rpc getTriggerDelay(GetTriggerDelayRequest) returns (GetTriggerDelayResponse) {}
+
+  /**
+ * Sets the um/pixel value.
+ */
+  rpc setUmPerPixel(SetUmPerPixelRequest) returns (SetUmPerPixelResponse);
+
+  /**
+   * Returns the um/pixel value.
+   * @return um/pixel value
+   */
+  rpc getUmPerPixel(GetUmPerPixelRequest) returns (GetUmPerPixelResponse);
+
+  /**
+ * Sets the camera gain parameter.
+ */
+  rpc setCameraGain(SetCameraGainRequest) returns (SetCameraGainResponse) {}
+
+  /**
+   * Sets the camera exposure parameter.
+   */
+  rpc setCameraExposure(SetCameraExposureRequest) returns (SetCameraExposureResponse) {}
+
+  /**
+   * Returns the camera gain parameter.
+   */
+  rpc getCameraGain(GetCameraGainRequest) returns (GetCameraGainResponse) {}
+
+  /**
+   * Returns the camera exposure parameter.
+   */
+  rpc getCameraExposure(GetCameraExposureRequest) returns (GetCameraExposureResponse) {}
+
+  /**
+   * Sets the camera rotation.
+   */
+  rpc setCameraRotation(SetCameraRotationRequest) returns (SetCameraRotationResponse);
+
+  /**
+   * Returns the camera rotation.
+   */
+  rpc getCameraRotation(GetCameraRotationRequest) returns (GetCameraRotationResponse);
+
+  /**
+   * Sets stroke [%].
+   */
+  rpc setStroke(SetStrokeRequest) returns (SetStrokeResponse) {}
+
+  /**
+   * Gets stroke [%].
+   */
+  rpc getStroke(GetStrokeRequest) returns (GetStrokeResponse) {}
+
+  /**
+   * Sets stroke [um/ms].
+   */
+  rpc setStrokeVelocity(SetStrokeVelocityRequest) returns (SetStrokeVelocityResponse) {}
+
+  /**
+   * Gets stroke [um/ms].
+   */
+  rpc getStrokeVelocity(GetStrokeVelocityRequest) returns (GetStrokeVelocityResponse) {}
+
+  /**
+   * Sets the max calib stroke-velocity. This does not affect the current stroke-velocity or the max stroke-velocity
+   * that can be set via setStrokeVelocity().
+   */
+  rpc setMaxCalibStrokeVelocity(SetMaxCalibStrokeVelocityRequest) returns (SetMaxCalibStrokeVelocityResponse) {}
+
+  /**
+   * Gets the max calib stroke-velocity. This does not affect the current stroke-velocity or the max stroke-velocity
+   * that can be set via setStrokeVelocity().
+   */
+  rpc getMaxCalibStrokeVelocity(GetMaxCalibStrokeVelocityRequest) returns (GetMaxCalibStrokeVelocityResponse) {}
+
+  /**
+   * Sets the initial stroke velocity.
+   */
+  rpc setInitialStrokeVelocity(SetInitialStrokeVelocityRequest) returns (SetInitialStrokeVelocityResponse) {}
+
+  /**
+   * Gets the initial stroke velocity.
+   */
+  rpc getInitialStrokeVelocity(GetInitialStrokeVelocityRequest) returns (GetInitialStrokeVelocityResponse) {}
+
+  /**
+   * Set consumable id (e.g. Pipe-ID '500-L').
+   */
+  rpc setConsumableId(SetConsumableIdRequest) returns (SetConsumableIdResponse) {}
+  /**
+   * Gets the consumable id (e.g. Pipe-ID '500-L').
+   */
+  rpc getConsumableId(GetConsumableIdRequest) returns (GetConsumableIdResponse) {}
+
+  /**
+   * Starts the droplet detection.
+   */
+  rpc startDropDetection(StartDropDetectionRequest) returns (StartDropDetectionResponse) {}
+
+  /**
+   * Stops the droplet detection.
+   */
+  rpc stopDropDetection(StopDropDetectionRequest) returns (StopDropDetectionResponse) {}
+
+  /**
+   * Sets the target directory of the data recorder.
+   */
+  rpc setDataRecorderTargetDirectory(SetDataRecorderDirectoryRequest)
+      returns (SetDataRecorderDirectoryResponse) {}
+
+  /**
+   * Gets the target directory of the data recorder.
+   */
+  rpc getDataRecorderTargetDirectory(GetDataRecorderDirectoryRequest)
+      returns (GetDataRecorderDirectoryResponse) {}
+
+  /**
+   * Enables or disables data recording. In case of write errors, the process will be stopped and an
+   * error message will be shown. If the UI is not used/disabled, it's advised to perform the data recording
+   * via the API.
+   */
+  rpc setDataRecordingEnabled(SetDataRecordingEnabledRequest) returns (SetDataRecordingEnabledResponse) {}
+
+  /**
+   * Returns the data recording enabled state.
+   */
+  rpc isDataRecordingEnabled(GetDataRecordingEnabledRequest) returns (GetDataRecordingEnabledResponse) {}
+
+  /**
+   * Enables or disables image recording.
+   */
+  rpc setImageRecordingEnabled(SetImageRecordingEnabledRequest) returns (SetImageRecordingEnabledResponse) {}
+
+  /**
+   * Returns the image recording enabled state.
+   */
+  rpc isImageRecordingEnabled(GetImageRecordingEnabledRequest) returns (GetImageRecordingEnabledResponse) {}
+
+  /**
+   * Connects the dispenser device used by the client.
+   */
+  rpc connectDispenserDevice(ConnectDispenserRequest) returns (ConnectDispenserResponse) {}
+
+  /**
+   * Disconnects the dispenser device used by the client.
+   */
+  rpc disconnectDispenserDevice(DisconnectDispenserRequest) returns (DisconnectDispenserResponse) {}
+
+  /**
+   * Scans for ports with compatible dispenser devices.
+   */
+  rpc scanForDispenserDevices(ScanForDispenserDevicesRequest) returns (ScanForDispenserDevicesResponse) {}
+
+  /**
+   * Scans for ports with compatible pressure control devices.
+   */
+  rpc scanForPressureControlDevices(ScanForPressureControlDevicesRequest) returns (ScanForPressureControlDevicesResponse) {}
+
+  /**
+   * Executes the specified dispenser command
+   */
+  rpc executeDispenserCommand(DispenserCommandRequest) returns (DispenserCommandResponse) {}
+
+  /**
+   * Executes the dispense command and waits until the dispenser device isn't busy anymore.
+   */
+  rpc executeDispenseCommandAndWait(DispenseAndWaitCommandRequest) returns (DispenseAndWaitCommandResponse) {}
+
+  /**
+ * Executes the specified dispenser command
+ */
+  rpc executePressureControlCommand(PressureControlCommandRequest) returns (PressureControlCommandResponse) {}
+
+  /**
+   * Quits the BFX Client app.
+   */
+  rpc quit(QuitApplicationRequest) returns (QuitApplicationResponse) {}
+
+  /**
+   * Sets the window position.
+   */
+  rpc setWindowPosition(SetWindowPositionRequest) returns (SetWindowPositionResponse) {}
+  /**
+   * Gets the window position.
+   */
+  rpc getWindowPosition(GetWindowPositionRequest) returns (GetWindowPositionResponse) {}
+  /**
+   * Sets the window size.
+   */
+  rpc setWindowSize(SetWindowSizeRequest) returns (SetWindowSizeResponse) {}
+  /**
+   * Gets the window size.
+   */
+  rpc getWindowSize(GetWindowSizeRequest) returns (GetWindowSizeResponse) {}
+
+  /**
+ * Establishes a connection to the PressureControl device and configures it according
+ * to the device configuration (application settings).
+ */
+  rpc connectPressureController(ConnectPressureControlRequest) returns (ConnectPressureControlResponse) {}
+
+  /**
+   * Disconnects the PressureControl device.
+   */
+  rpc disconnectPressureController(DisconnectPressureControlRequest) returns (DisconnectPressureControlResponse) {}
+
+  /**
+   * Enables the active pressure control of the specified channel.
+   */
+  rpc enablePressureControl(EnablePressureControlRequest) returns (EnablePressureControlResponse) {}
+  /**
+   * Disables the active pressure control of the specified channel.
+   */
+  rpc disablePressureControl(DisablePressureControlRequest) returns (DisablePressureControlResponse) {}
+
+  /**
+   * Sets the target pressure of the specified channel that should be set by the active pressure control.
+   */
+  rpc setTargetPressure(SetTargetPressureCommandRequest) returns (SetTargetPressureCommandResponse) {}
+
+  /**
+   * Returns the current pressure as measured by the pressure sensor of the specified channel.
+   */
+  rpc getCurrentPressure(GetCurrentPressureRequest) returns (GetCurrentPressureResponse) {}
+
+  /**
+   * Moves the motor of the specified channel to the specified position.
+   */
+  rpc moveMotorSteps(MoveMotorStepsRequest) returns (MoveMotorStepsResponse) {}
+
+  /**
+   * Configures the specified piezo channel.
+   */
+  rpc configurePiezoChannel(PiezoChannelConfigRequest) returns (PiezoChannelConfigResponse) {}
+
+  /**
+   * Sets the dispense frequency.
+   */
+  rpc setDispenseFrequency(SetDispenseFrequencyRequest) returns (SetDispenseFrequencyResponse) {}
+
+  /**
+   * Returns the dispense frequency.
+   */
+  rpc getDispenseFrequency(GetDispenseFrequencyRequest) returns (GetDispenseFrequencyResponse) {}
+
+  /**
+   * Sets the number of dispenses (dispense cycles) of the specified channel.
+   */
+  rpc setNumberOfDispenses(SetNumberOfDispensesRequest) returns (SetNumberOfDispensesResponse) {}
+
+  /**
+   * Returns the number of dispenses (dispense cycles) of the specified channel.
+   */
+  rpc getNumberOfDispenses(GetNumberOfDispensesRequest) returns (GetNumberOfDispensesResponse) {}
+
+  /**
+   * Sets the instroke velocity (applies to the specified channel).
+   */
+  rpc setInstrokeVelocity(SetInstrokeVelocityRequest) returns (SetInstrokeVelocityResponse) {}
+
+  /**
+   * Returns the instroke velocity (applies to the specified channel).
+   */
+  rpc getInstrokeVelocity(GetInstrokeVelocityRequest) returns (GetInstrokeVelocityResponse) {}
+
+  /**
+   * Requests detection results. This method should be called frequently (for a trigger frequency of 10Hz, it should
+   * be called every 100-300ms). The number of detection results contained in one method call is limited due to package
+   * size limitations of the underlying protocol. That is, it is necessary to check the number of results that are
+   * remaining on the server to ensure that no unrequested results remain in the result queue of the service.
+   *
+   * @return list of requested results and the number of results remaining on the server
+   */
+  rpc requestDetectionResults(DetectionResultsRequest) returns (DetectionResultsResponse) {}
+
+  /**
+   * Requests current priming parameters.
+   */
+  rpc getPrimingParameters(GetPrimingParametersRequest) returns (GetPrimingParametersResponse) {}
+
+  /**
+   * Sets specified priming parameters.
+   */
+  rpc setPrimingParameters(SetPrimingParametersRequest) returns (SetPrimingParametersResponse) {}
+
+  /**
+   * Performs channel priming. This method is not available in the stable release of the gRPC service.
+   */
+  rpc primeChannel(PrimeChannelRequest) returns (PrimeChannelResponse) {}
+
+  /**
+   * Requests to stop the current priming process, if process is currently running. Does nothing otherwise.
+   */
+  rpc stopChannelPrimingChannel(StopChannelPrimingRequest) returns (StopChannelPrimingResponse) {}
+
+  /**
+   * Indicates, whether the priming process is currently running.
+   */
+  rpc isPrimingChannel(IsPrimingChannelRequest) returns (IsPrimingChannelResponse) {}
+
+  /**
+   * Configures pressure compensation for the specified channel. Depending on the reservoir type, it can be necessary
+   * to compensate for pressure changes that occur because of decreasing fluid levels/fluid column in the reservoir.
+   * This is done by adjusting the target pressure of the pressure control algorithm. If this is the case, the the
+   * measurement is unable to take the pressure changes into account and the target pressure must be adjusted
+   * accordingly. If the default reservoir type is used, this is not necessary and the pressure compensation can be
+   * disabled. This is the default setting.
+   *
+   *
+   * This method is not available in the stable release of the gRPC service.
+   */
+  rpc setPressureCompensationConfiguration(SetPressureCompensationConfigurationRequest) returns (SetPressureCompensationConfigurationResponse) {}
+
+  /**
+   * Returns the pressure compensation configuration for the specified channel.
+   * This method is not available in the stable release of the gRPC service.
+   */
+  rpc getPressureCompensationConfiguration(GetPressureCompensationConfigurationRequest) returns (GetPressureCompensationConfigurationResponse) {}
+
+  /**
+   * Enables pressure compensation for the specified channel.
+   */
+  rpc enablePressureCompensation(EnablePressureCompensationRequest) returns (EnablePressureCompensationResponse) {}
+
+  /**
+    * Disables pressure compensation for the specified channel.
+   */
+  rpc disablePressureCompensation(DisablePressureCompensationRequest) returns (DisablePressureCompensationResponse) {}
+
+  /**
+   * Returns the pressure compensation status for the specified channel.
+   * This method is not available in the stable release of the gRPC service.
+   */
+  rpc getPressureCompensationStatus(GetPressureCompensationStatusRequest) returns (GetPressureCompensationStatusResponse) {}
+
+  /**
+   * Sets the reservoir configuration for the specified channel.
+   * This method is not available in the stable release of the gRPC service.
+   */
+  rpc setReservoirVolume(SetReservoirVolumeRequest) returns (SetReservoirVolumeResponse) {}
+
+  /**
+   * Returns the reservoir configuration for the specified channel.
+   * This method is not available in the stable release of the gRPC service.
+   */
+  rpc getReservoirVolume(GetReservoirVolumeRequest) returns (GetReservoirVolumeResponse) {}
+
+  /**
+   * Enables the reservoir volume counting for the specified channel.
+   */
+  rpc enableReservoirVolumeCounting(EnableReservoirVolumeCountingRequest) returns (EnableReservoirVolumeCountingResponse) {}
+
+  /**
+   * Disables the reservoir volume counting for the specified channel.
+   */
+  rpc disableReservoirVolumeCounting(DisableReservoirVolumeCountingRequest) returns (DisableReservoirVolumeCountingResponse) {}
+
+  /**
+   * Stops the calibration process.
+   */
+  rpc stopCalibration(StopCalibrationRequest) returns (StopCalibrationResponse) {}
+
+  /**
+   * Sets a custom calibration curve. WIP, tables as files implemented
+   * DEPRECATED: This method is deprecated and will be removed in future versions. It's purpose is to provide a
+   * workaround setting a custom calibration curve since no liquid classes are available.
+   */
+  rpc setCustomCalibrationCurve(SetCustomCalibrationCurveRequest) returns (SetCustomCalibrationCurveResponse) {}
+
+}
+
+// ----------------------------------------
+// Data recorder
+// ----------------------------------------
+
+message SetDataRecordingEnabledRequest {
+  bool enabled = 1;
+}
+
+message SetDataRecordingEnabledResponse {
+
+}
+
+message GetDataRecordingEnabledRequest {
+}
+
+message GetDataRecordingEnabledResponse {
+  bool enabled = 1;
+}
+
+message SetImageRecordingEnabledRequest {
+  bool enabled = 1;
+}
+
+message SetImageRecordingEnabledResponse {
+
+}
+
+message GetImageRecordingEnabledRequest {
+}
+
+message GetImageRecordingEnabledResponse {
+  bool enabled = 1;
+}
+
+message SetDataRecorderDirectoryRequest {
+  string directory = 1;
+}
+
+message SetDataRecorderDirectoryResponse {
+
+}
+
+message GetDataRecorderDirectoryRequest {
+}
+
+message GetDataRecorderDirectoryResponse {
+  string directory = 1;
+}
+
+// ----------------------------------------
+// Calibration parameters
+// ----------------------------------------
+
+message SetDropletTargetHeightRequest {
+  int32 targetHeight = 1; // [px]
+}
+
+message SetDropletTargetHeightResponse {
+}
+
+message GetDropletTargetHeightRequest {
+}
+
+message GetDropletTargetHeightResponse {
+  int32 targetHeight = 1; // [px]
+}
+
+message SetInitialStrokeVelocityRequest {
+  int32 piezoChannel = 1;
+  double velocity    = 2; // [mm/ms]
+}
+
+message SetInitialStrokeVelocityResponse {
+
+}
+
+message GetInitialStrokeVelocityRequest {
+  int32 piezoChannel = 1;
+}
+
+message GetInitialStrokeVelocityResponse {
+  double velocity    = 1; // [mm/ms]
+}
+
+message SetMaxCalibStrokeVelocityRequest {
+  int32 piezoChannel = 1;
+  double velocity    = 2; // [mm/ms]
+}
+
+message SetMaxCalibStrokeVelocityResponse {
+
+}
+
+message GetMaxCalibStrokeVelocityRequest {
+  int32 piezoChannel = 1;
+}
+
+message GetMaxCalibStrokeVelocityResponse {
+  double velocity    = 1; // [mm/s]
+}
+
+message SetMaxCalibrationStrokeVelocityRequest {
+  int32 piezoChannel = 1;
+  double velocity    = 2; // [mm/ms]
+}
+
+message SetMaxCalibrationStrokeVelocityResponse {
+
+}
+
+message GetMaxCalibrationStrokeVelocityRequest {
+  int32 piezoChannel = 1;
+}
+
+message GetMaxCalibrationStrokeVelocityResponse {
+  double velocity = 1; // [um/ms]
+}
+
+
+// ----------------------------------------
+// Priming channels
+// ----------------------------------------
+
+message GetPrimingParametersRequest {
+  /**
+   * The piezo channel to prime.
+   */
+  int32 piezoChannel    = 1;
+
+}
+
+message GetPrimingParametersResponse {
+  PrimingParameters primingParameters = 1;
+}
+
+message SetPrimingParametersRequest {
+  PrimingParameters primingParameters = 1;
+}
+
+message SetPrimingParametersResponse {
+  //
+}
+
+/**
+ * Priming parameters.
+ */
+message PrimingParameters {
+  /**
+   * The piezo channel to prime.
+   */
+  int32 dispenseChannel = 1;
+  /** currently ony 1 is supported */
+  int32 pressureChannel = 2;
+
+  /**
+   * Dispense frequency in Hz.
+   */
+  double dispenseFrequency  = 3;  // [Hz]
+
+  /**
+   * Stroke in %. 0% means no stroke, 100% means full stroke.
+   */
+  double initialStroke = 4;  // [%]
+
+  /**
+   * Stroke velocity in um/ms.
+   */
+  double initialStrokeVelocity = 5;  // [um/ms]
+
+  /**
+   * Trigger delay in ms.
+   */
+  int32 initialTriggerDelay = 6;  // [ms]
+
+  /**
+   * Minimum volume to be considered for liquid detection in nl.
+   */
+  double minVolume = 7;  // [nl]
+
+  /**
+   * Pressure estimate. Should be set to the pressure at which the liquid stays
+   * in the pipe bot with inward meniscus (convex). A rough estimate is sufficient. Just ensure that dripping
+   * does not occur and the liquid is not sucked out of the pipe.
+   */
+  double pressureEstimate = 8; // [mbar]
+
+  reserved "pressureTolerance"; reserved 9;
+
+  /**
+   * Initial retraction steps to be performed prior to priming. This is done to ensure that the pipe and tube are
+   * completely empty. This value highly depends on the pipe/tube length and needs to be adjusted accordingly.
+   */
+  int32 initialRetractionSteps = 20; // [steps]
+
+  /**
+   * Initial motor steps to be performed prior to priming. This is done to ensure that the liquid is close to the
+   * PipeJet pipe. The value should be set to the number of steps that are necessary to move the liquid close to the
+   * upper end of the pipe.
+   *
+   * If agressive flusing is desired, this value can be set to a higher value. The algorithm will then reduce the
+   * meniscus/pressure accordingly instead of slowly searching the liquid.
+   */
+  int32 initialMotorSteps  = 10; // [steps]
+
+  /**
+   * Timeout for liquid detection (dispensing, droplet generation with specified min volume).
+   */
+  int64 initialPrimingTimeout = 11; // [ms]
+
+  /**
+   * Minimum meniscus volume for meniscus detection. Makes sure small droplets/artifacts are not
+   * falsely detected as meniscus.
+   */
+  double minMeniscusVolume = 12;  // [nl]
+  /**
+   * Maximum meniscus volume for meniscus detection. Makes sure dripping is prevented.
+   */
+  double maxMeniscusVolume = 13;  // [nl]
+
+  // reserve 'maxNumberOfCycles' and 14 for future use
+  reserved "maxNumberOfCycles";reserved 14;
+
+  /**
+   * CURRENTLY unused: Max pressure to be tolerated after first successful liquid dispensing.
+   */
+  double maxPressure = 15; // [mbar]
+
+  /**
+   * Size of the control steps for meniscus control.
+   */
+  double meniscusControlSteps = 16; // [mbar]
+
+  /**
+   * Timeout for meniscus control.
+   */
+  int64 meniscusControlTimeout = 17; // [ms]
+
+  /**
+    * Slow motor steps to be performed while liquid is searched (droplet dispensing, right prior to meniscus control).
+   */
+  int32 slowMotorSteps = 18; // [steps]
+
+  /**
+   * Whether tara is enabled. Make sure to adjust pressure estimate accordingly.
+   */
+  bool taraEnabled = 19;
+
+  // An optional offset to be applied after finding the meniscus. This is useful if the desired meniscus is concave
+  // which means that it'S inside the pipe and can't necessarily be detected by the vision system.
+  double meniscusPressureOffset = 21; // [mbar]
+
+  // The number of retraction steps to be performed after initial droplet/volume finding. This is useful to reduce
+  // the pressure in the pipe and to prevent unnecessary dripping.
+  int32 retractionStepsAfterDropletFinding = 22; // [steps]
+
+  // The number of droplets to be dispensed for droplet finding. This is useful to ensure a stable droplet finding
+  // and to prevent false positives.
+  int32 numberOfDropletsForDropletFinding = 23;
+
+  // The duration between slow motor steps. Adjust this value if the response time of the fluidic system significantly
+  // deviates from the default value.
+  int32 durationBetweenSlowMotorSteps = 24; // [ms]
+
+}
+
+
+
+message PrimeChannelRequest {
+  /**
+   * The piezo channel to prime.
+   */
+  int32 piezoChannel    = 1;
+
+  /**
+   * Currently, only channel 1 is supported.
+   */
+  int32 pressureChannel = 2;
+
+  PRIMING_TYPE primingType = 3;
+}
+
+enum PRIMING_TYPE {
+  /**
+   * Default priming type.
+   */
+  DEFAULT                          = 0;
+  /**
+   * Uses simple img diff with Pipe-specific ROI
+   * to detect whether liquid is present.
+   *
+   * Currently, only DEFAULT is supported.
+   */
+  SIMPLE_IMPROC_BASED              = 1;
+  /**
+   * Uses sophisticated Pipe/liquid-detection and
+   * pressure information to prime the specified channel.
+   * <b>NOTE:</b> This method might be limited to a specific
+   * hardware version.
+   *
+   * Currently, only DEFAULT is supported.
+   */
+  IMPROC_BASED_WITH_PRESSURE = 2;
+}
+
+message PrimeChannelResponse {
+  // TODO: add response message type (currently string)
+  string response = 1;
+}
+
+message StopChannelPrimingRequest {
+  /**
+   * The piezo channel to prime/to stop.
+   */
+  reserved "piezoChannel"; reserved 1;
+}
+
+message StopChannelPrimingResponse {
+
+}
+
+message IsPrimingChannelRequest {
+  /**
+   * The piezo channel to check for priming.
+   */
+  reserved "piezoChannel"; reserved 1;
+}
+
+message IsPrimingChannelResponse {
+  bool isPriming = 1;
+}
+
+// ----------------------------------------
+// Pressure compensation
+// ----------------------------------------
+message PressureCompensationConfiguration {
+
+  int32  channel                 = 1; // channel number, currently only channel 1 is supported
+
+  // automatic pressure compensation is possible if the following parameters are known
+  double gravitationalAcc        = 2; // acceleration due to gravity, usually -9.81 [m/s^2]
+  double density                 = 3; // density of the fluid, usually referred to as rho, e.g., 1000 [kg/m^3]
+  double reservoirDiameter       = 4; // inner diameter of the reservoir, e.g., 10 [mm]
+  double updateDelta             = 5; // update the new target pressure every 'updateDelta', usually 0.1mbar, [mbar]
+
+  // if the above parameters are not known, the following parameters can be used to compensate for the pressure difference
+  // due to varying height of the fluid column with a manual compensation factor
+  bool   useManualCompensation   = 6; // if true, a custom factor is used, otherwise the computed factor is used
+
+  double manualCompensationValue = 7; // manual value to use for pressure compensation (pressureDiff = volumeDiff[ml] * manualCompensationValue)
+}
+
+message ReservoirVolume {
+  double volume = 1; // volume of the reservoir, [ml]
+}
+
+message EnablePressureCompensationRequest {
+  int32 channel = 1; // currently, only channel 1 is supported
+}
+
+message EnablePressureCompensationResponse {
+}
+
+message DisablePressureCompensationRequest {
+  int32 channel = 1; // currently, only channel 1 is supported
+}
+
+message DisablePressureCompensationResponse {
+}
+
+message SetPressureCompensationConfigurationRequest {
+  PressureCompensationConfiguration configuration = 1;
+}
+
+message SetPressureCompensationConfigurationResponse {
+}
+
+message GetPressureCompensationConfigurationRequest {
+  int32 channel = 1; // currently, only channel 1 is supported
+}
+
+message GetPressureCompensationConfigurationResponse {
+  PressureCompensationConfiguration configuration = 1;
+}
+
+message GetPressureCompensationStatusRequest {
+  int32 channel = 1; // currently, only channel 1 is supported
+}
+
+message GetPressureCompensationStatusResponse {
+  double pressureCompensationValue = 1; // the current pressure compensation value, [mbar]
+}
+
+message SetReservoirVolumeRequest {
+  int32 channel = 1; // currently, only channel 1 is supported
+  ReservoirVolume volume = 2;
+}
+
+message SetReservoirVolumeResponse {
+}
+
+message GetReservoirVolumeRequest {
+  int32 channel = 1; // currently, only channel 1 is supported
+}
+
+message GetReservoirVolumeResponse {
+  ReservoirVolume volume = 1;
+}
+
+message EnableReservoirVolumeCountingRequest {
+  int32 channel = 1;
+}
+
+message EnableReservoirVolumeCountingResponse {
+}
+
+message DisableReservoirVolumeCountingRequest {
+  int32 channel = 1;
+}
+
+message DisableReservoirVolumeCountingResponse {
+}
+
+// ----------------------------------------
+// Preview image
+// ----------------------------------------
+
+/**
+ * Preview image request.
+ */
+message CaptureImageRequest {}
+/**
+ * Preview image response.
+ */
+message CaptureImageResponse {
+  // Preview image data (image, resolution etc.)
+  PreviewImageInfo imageInfo = 1;
+}
+
+/**
+ * Preview quality request.
+ */
+message SetPreviewImageQualityRequest {
+  // image quality (low-medium-high)
+  PreviewImageSettings settings = 1;
+}
+
+/**
+ * Preview quality response.
+ */
+message SetPreviewImageQualityResponse {
+}
+
+/**
+ * Preview image quality request.
+ */
+message GetPreviewImageQualityRequest {
+}
+
+/**
+ * Preview image quality response.
+ */
+message GetPreviewImageQualityResponse {
+  // image quality (low-medium-high)
+  PreviewImageSettings settings = 1;
+}
+
+/**
+ * Quality-settings for the preview image.
+ */
+enum PreviewImageSettings {
+  LOWEST = 0; // very high compression, very low resolution
+  LOW    = 1; // high compression, low resolution
+  MEDIUM = 2; // compression, half resolution
+  HIGH   = 3; // compression, but full resolution
+  ULTRA  = 4; // only minimal compression, but full resolution
+}
+
+/**
+ * Contains a compressed preview image of the camera.
+ */
+message PreviewImageInfo {
+  com.biofluidix.bfxclient.common.rpc.Image            image     = 1;
+}
+
+
+
+
+message SetConsumableIdRequest {
+  // piezo-channel
+  int32 channel       = 1;
+  // consumable-id, e.g., pipe-id '500-L'
+  string consumableId = 2;
+}
+
+message SetConsumableIdResponse {
+
+}
+
+message GetConsumableIdRequest {
+  // piezo-channel
+  int32 channel = 1;
+}
+
+message GetConsumableIdResponse {
+  // consumable-id, e.g., pipe-id '500-L'
+  string consumableId = 1;
+}
+
+message ScanForDispenserDevicesRequest {
+  string id = 1; // uuid
+}
+
+message ScanForDispenserDevicesResponse {
+  // list of ports with dispenser-devices (e.g., ['COM3', 'COM7', 'COM12'])
+  repeated string portsWithCompatibleDevices = 1;
+}
+
+message ScanForPressureControlDevicesRequest {
+  string id = 1; // depending on device, sub-address or uuid
+}
+
+message ScanForPressureControlDevicesResponse {
+  // list of ports with dispenser-devices (e.g., ['COM3', 'COM7', 'COM12'])
+  repeated string portsWithCompatibleDevices = 1;
+}
+
+message SetInstrokeVelocityRequest {
+  reserved "channel"; reserved 1;
+  double velocity = 2; // [um/s]
+}
+
+message SetInstrokeVelocityResponse {
+  reserved "channel"; reserved 1;
+}
+
+message GetInstrokeVelocityRequest {
+  reserved "channel"; reserved 1;
+}
+
+message GetInstrokeVelocityResponse {
+  reserved "channel"; reserved 1;
+  double velocity = 2; // [um/s]
+}
+
+message SetNumberOfDispensesRequest {
+  // piezo-channel
+  int32 channel = 1;
+  int32 numberOfDispenses = 2;
+}
+
+message SetNumberOfDispensesResponse {
+  // piezo-channel
+  int32 channel = 1;
+}
+
+message GetNumberOfDispensesRequest {
+  // piezo-channel
+  int32 channel = 1;
+}
+
+message GetNumberOfDispensesResponse {
+  // piezo-channel
+  int32 channel = 1;
+  // number of dispenses (dispense cycles) of the specified channel
+  int32 numberOfDispenses = 2;
+}
+
+message SetDispenseFrequencyRequest {
+  double frequency = 1;  // in Hz
+}
+
+message SetDispenseFrequencyResponse {
+
+}
+
+message GetDispenseFrequencyRequest {
+}
+
+message GetDispenseFrequencyResponse {
+  double frequency = 1;  // in Hz
+}
+
+/**
+ * Configures the specified piezo channel.
+ */
+message PiezoChannelConfigRequest {
+  // piezo-channel
+  int32 channel = 1;
+  // determines/indicates whether channel is enabled
+  bool  enabled = 2;
+  // determines/indicates whether channel is selected as 'solo' channel
+  // (only one channel can be selected as 'solo' channel, other channels will be disabled)
+  // solo channel is used for calibration/droplet detection
+  bool  solo    = 3;
+}
+
+/**
+ * Response for the piezo channel configuration.
+ */
+message PiezoChannelConfigResponse {
+  bool success = 1;
+}
+
+// ----------------------------------------
+// CAMERA
+// ----------------------------------------
+
+message SetCameraGainRequest {
+  // normalized camera gain (0.0% - 100.0%)
+  double gain = 1;
+}
+message SetCameraGainResponse {
+  // normalized camera gain (0.0% - 100.0%)
+  double new_gain = 1;
+}
+message SetCameraExposureRequest {
+  // camera exposure (value range depends on camera model)
+  double exposure = 1;
+}
+message SetCameraExposureResponse {
+  // camera exposure (value range depends on camera model)
+  double new_exposure = 1;
+}
+message GetCameraGainRequest {}
+message GetCameraGainResponse {
+  // normalized camera gain (0.0% - 100.0%)
+  double gain = 1;
+}
+message GetCameraExposureRequest {}
+message GetCameraExposureResponse {
+  // camera exposure (value range depends on camera model)
+  double exposure = 1;
+}
+
+// ----------------------------------------
+// ROI
+// ----------------------------------------
+
+message SetTopROIRequest {
+  int32 topROI = 1; // [px]
+}
+message SetTopROIResponse {}
+message SetBottomROIRequest {
+  int32 bottomROI = 1; // [px]
+}
+message SetBottomROIResponse {}
+
+message SetLeftROIRequest {
+  int32 leftROI = 1; // [px]
+}
+message SetLeftROIResponse {}
+message SetRightROIRequest {
+  int32 rightROI = 1; // [px]
+}
+message SetRightROIResponse {}
+
+// get ROI
+message GetROIRequest {}
+message GetROIResponse {
+  int32 topROI = 1; // [px]
+  int32 bottomROI = 2; // [px]
+  int32 leftROI = 3; // [px]
+  int32 rightROI = 4; // [px]
+}
+
+// ----------------------------------------
+// umPerPixel
+// ----------------------------------------
+message SetUmPerPixelRequest {
+  double umPerPixel = 1;
+}
+message SetUmPerPixelResponse {}
+message GetUmPerPixelRequest {}
+message GetUmPerPixelResponse {
+  double umPerPixel = 1;
+}
+
+// ----------------------------------------
+// CAMERA Orientation
+// ----------------------------------------
+enum CAM_ROTATION {
+  NO_ROTATION                 = 0;
+  ROTATE_90_CLOCKWISE         = 1;
+  ROTATE_90_COUNTER_CLOCKWISE = 2;
+  ROTATE_180_CLOCKWISE        = 3;
+}
+
+
+message SetCameraRotationRequest {
+  int32 cameraRotation = 1;
+}
+
+message SetCameraRotationResponse {}
+
+message GetCameraRotationRequest {}
+
+message GetCameraRotationResponse {
+  int32 cameraRotation = 1;
+}
+
+// ----------------------------------------
+// Reference image
+// ----------------------------------------
+message CaptureReferenceImageRequest {
+  // indicates whether the ROI should be updated during capturing process or not
+  //  bool disableROIUpdate = 1;
+  reserved "disableROIUpdate"; reserved 1;
+}
+message CaptureReferenceImageResponse {
+  com.biofluidix.bfxclient.common.rpc.ReferenceImageInfo imageInfo = 1;
+}
+
+// allows to set and process the reference image
+// from an external source. for correct thresholding
+// two images are required. if the images are identical
+// the processing will assume a noise level (will be logged)
+message SetAndProcessReferenceImageRequest{
+
+  // an optional timestamp can be provided (should be used for indicating the capturing time of the first image)
+  int64 timestamp = 1; // [ms, posix epoch]
+
+  // the first reference image (used for background removal)
+  com.biofluidix.bfxclient.common.rpc.Image firstImage  = 2;
+  // the second reference image (used for background removal)
+  com.biofluidix.bfxclient.common.rpc.Image secondImage = 3;
+
+  // if true, the server will generate a timestamp for the reference image, otherwise the provided timestamp will be used
+  bool generateTimestamp = 4;
+}
+
+message SetAndProcessReferenceImageResponse {
+  com.biofluidix.bfxclient.common.rpc.ReferenceImageInfo imageInfo = 1;
+}
+
+// ----------------------------------------
+// Control-loops (enable/disable)
+// ----------------------------------------
+
+message    PosControlRequest {
+  bool enabled = 1;
+}
+message    PosControlResponse {
+  //
+}
+
+message    FindDropletRequest {
+  bool enabled = 1;
+}
+message    FindDropletResponse {
+  //
+}
+
+message    VolControlRequest {
+  bool enabled = 1;
+}
+
+message VolControlResponse {
+  //
+}
+
+// ----------------------------------------
+// Trigger delay
+// ----------------------------------------
+
+
+message SetTriggerDelayRequest {
+  int32 triggerDelay = 1; // [us]
+}
+
+message SetTriggerDelayResponse {
+  //
+}
+
+message GetTriggerDelayRequest {
+  //
+}
+
+message GetTriggerDelayResponse {
+  int32 triggerDelay = 1;
+}
+
+// ----------------------------------------
+// Piezo channel parameters (stroke, stroke-velocity)
+// ----------------------------------------
+
+message SetStrokeRequest {
+  int32 channel  = 1;
+  double stroke  = 2;
+}
+
+message SetStrokeResponse {
+
+}
+message GetStrokeRequest {
+  // piezo-channel
+  int32 channel  = 1;
+}
+
+message GetStrokeResponse {
+  // piezo-channel
+  int32 channel  = 1;
+  double stroke  = 2; // [um]
+}
+
+message SetStrokeVelocityRequest {
+  // piezo-channel
+  int32 channel  = 1;
+  double strokeVelocity = 2; // [um/s]
+}
+
+message SetStrokeVelocityResponse {
+  // piezo-channel
+  int32 channel  = 1;
+}
+message GetStrokeVelocityRequest {
+  // piezo-channel
+  int32 channel  = 1;
+}
+
+message GetStrokeVelocityResponse {
+  // piezo-channel
+  int32 channel  = 1;
+  double strokeVelocity = 2; // [um/s]
+}
+
+// ----------------------------------------
+// Drop-detection (enable/disable)
+// ----------------------------------------
+
+
+message StartDropDetectionRequest {
+
+}
+
+message StartDropDetectionResponse {
+
+}
+
+message StopDropDetectionRequest {
+
+}
+
+message StopDropDetectionResponse {
+
+}
+
+// ----------------------------------------
+// Detection results
+// ----------------------------------------
+
+message DetectionResultsRequest {}
+message DetectionResultsResponse {
+
+  // the number of results that are remaining on the server
+  int32   numResultsRemaining = 1;
+
+  // list of results
+  repeated DetectionResult results = 2;
+}
+
+/**
+ * Contains detected results (detected droplets and a preview image).
+ */
+message DetectionResult {
+  int64            timestamp       = 1; // [ms, posix epoch]
+  repeated com.biofluidix.bfxclient.common.rpc.Droplet droplets        = 2;
+  com.biofluidix.bfxclient.common.rpc.Image            image           = 3;
+  int64            triggerPeriod   = 4; // [us]
+  Telemetry        telemetry       = 5;
+}
+
+/**
+ * Contains process telemetry.
+ */
+message Telemetry {
+  int64            processingTime = 1; // [us]
+}
+
+// ----------------------------------------
+// Window size/position & UI
+// ----------------------------------------
+
+message SetWindowPositionRequest {
+  int32 posX = 1; // [px]
+  int32 posY = 2; // [px]
+}
+message SetWindowPositionResponse {}
+message GetWindowPositionRequest {
+
+}
+message GetWindowPositionResponse {
+  int32 posX = 1; // [px]
+  int32 posY = 2; // [px]
+}
+message SetWindowSizeRequest {
+  int32 width  = 1; // [px]
+  int32 height = 2; // [px]
+}
+message SetWindowSizeResponse {}
+message GetWindowSizeRequest {}
+message GetWindowSizeResponse {
+  int32 width  = 1; // [px]
+  int32 height = 2; // [px]
+}
+
+message HideWindowRequest {}
+message HideWindowResponse {}
+
+message ShowWindowRequest {
+  bool alwaysOnTop = 1;
+}
+message ShowWindowResponse {}
+
+
+message WindowCloseRequest {
+
+}
+
+message WindowCloseResponse {
+
+}
+
+message ShowMessageDialogRequest {
+  string title   = 1;
+  string message = 2;
+}
+
+message ShowMessageDialogResponse {
+
+}
+
+message ShowYesNoDialogRequest {
+  string title   = 1;
+  string message = 2;
+}
+
+message ShowYesNoDialogResponse {
+  string buttonPressed   = 1; // 'yes', or 'no'
+}
+
+
+// ----------------------------------------
+// quit app
+// ----------------------------------------
+message QuitApplicationRequest {}
+message QuitApplicationResponse {}
+
+// ----------------------------------------
+// (dis-)connect
+// ----------------------------------------
+message ConnectRequest {}
+message ConnectResponse {
+  string clientId = 1; // unique client id provided by service
+}
+message DisconnectRequest {
+  string clientId = 1; // unique client id to identify client
+}
+message DisconnectResponse {}
+
+message ReconnectRequest {
+  string clientId = 1; // unique client id to identify client
+}
+
+message ReconnectResponse {
+}
+
+// ----------------------------------------
+// Version info
+// ----------------------------------------
+message GetVersionInfoRequest {}
+message GetVersionInfoResponse {
+  VersionInfo versionInfo = 1;
+}
+
+// ----------------------------------------
+// cam init
+// ----------------------------------------
+
+message AwaitCameraRequest {
+  int32 timeout = 1; // [ms]
+}
+message AwaitCameraResponse {
+  bool success  = 1;
+}
+
+// ----------------------------------------
+// calibration
+// ----------------------------------------
+
+message CalibrationRequest {
+  CalibrationCommand command = 1;
+}
+message CalibrationResponse {
+  repeated com.biofluidix.bfxclient.common.rpc.CalibrationResult results = 1;
+}
+
+message StopCalibrationRequest {
+}
+
+message StopCalibrationResponse {
+}
+
+
+// ----------------------------------------
+// Dispenser Device connection
+// ----------------------------------------
+
+message ConnectDispenserRequest {
+  string portInfo = 1; // com port name, e.g. 'COM10'
+}
+message ConnectDispenserResponse {
+
+}
+
+message DisconnectDispenserRequest {
+
+}
+message DisconnectDispenserResponse {}
+
+message DispenserCommandRequest {
+  string name = 1;  // e.g., 'dispense'
+  string cmd  = 2;  // e.g., 'i'
+}
+message DispenserCommandResponse {
+  string name = 1;
+  string response = 2;
+}
+
+message DispenseAndWaitCommandRequest {
+
+}
+
+message DispenseAndWaitCommandResponse {
+  int64 timeout = 1; // [ms]
+}
+
+/**
+ * Information on the version, the device, operating system and architecture.
+ */
+message VersionInfo {
+  string          version      = 1;
+  reserved "buildInfo";    reserved 2;
+  reserved "osVersion";    reserved 3;
+  reserved "architecture"; reserved 4;
+  reserved "deviceName"; reserved 5;
+  reserved "deviceId"; reserved 6;
+}
+
+message CalibrationCommand {
+  repeated CalibrationEntry commands = 1;
+}
+
+message CalibrationEntry {
+
+  int32  channel                 = 1;
+  double targetVolume            = 2; // [nL]
+  int32  maxSteps                = 3;
+  int32  numberOfValidationSteps = 4;
+  double relativeError           = 5; // [%]
+
+  reserved "roundness"; reserved 6;
+  reserved "cv";        reserved 7;
+
+  com.biofluidix.bfxclient.common.rpc.CalibrationResult result       = 8;
+
+  bool ignoreSpecifiedResultAsInitialValue = 9;
+
+}
+
+enum CalibrationType {
+  VALID   = 0;
+  INVALID = 1;
+  ERROR   = 2;
+  ABORTED = 3;
+}
+
+
+
+
+
+
+
+// ----------------------------------
+// SMART RESERVOIR
+// ----------------------------------
+
+// ----------------------------------------
+// PressureControl connection & commands
+// ----------------------------------------
+
+
+// --------------------
+// connect
+// --------------------
+message ConnectPressureControlRequest {
+  string portInfo = 1; // com port name, e.g. 'COM10'
+}
+message ConnectPressureControlResponse {
+  reserved "name"; reserved 1;
+  string response = 2; //configuration response
+}
+message DisconnectPressureControlRequest {}
+message DisconnectPressureControlResponse {}
+
+// --------------------
+// en-/disable pcr
+// --------------------
+message EnablePressureControlRequest {
+  // pressure-channel (currently, only 1 is supported)
+  int32 channel  = 1;
+}
+message EnablePressureControlResponse {
+  // pressure-channel (currently, only 1 is supported)
+  int32 channel  = 1;
+}
+message DisablePressureControlRequest {
+  // pressure-channel (currently, only 1 is supported)
+  int32 channel  = 1;
+}
+message DisablePressureControlResponse {
+  // pressure-channel (currently, only 1 is supported)
+  int32 channel  = 1;
+}
+
+
+// --------------------
+// set pressure
+// --------------------
+message SetTargetPressureCommandRequest {
+  TargetPressureEntry command = 2;
+}
+message SetTargetPressureCommandResponse {}
+/**
+ * The target pressure to be set by the PressureControl device.
+ */
+message TargetPressureEntry {
+  int32  channel           = 1;
+  double targetPressure    = 2; // [mbar]
+  double pressureTolerance = 3; // [mbar]
+}
+
+message GetTargetPressureRequest {
+  int32 channel = 1;
+}
+message GetTargetPressureResponse {
+  TargetPressureEntry targetPressure = 1;
+}
+
+/**
+ * Requests the current pressure measured by the PressureControl device.
+ */
+message GetCurrentPressureRequest {
+  int32 channel = 1;
+}
+/**
+ * The current pressure measured by the PressureControl device.
+ */
+message GetCurrentPressureResponse {
+  int32  channel = 1;
+  double currentPressure = 2;   // [mbar]
+}
+
+// --------------------
+// motor control
+// --------------------
+message MoveMotorStepsRequest {
+  int32 channel = 1;
+  int32 steps = 2;
+}
+message MoveMotorStepsResponse {
+  int32 channel = 1;
+}
+
+// --------------------
+// direct comm
+// --------------------
+message PressureControlCommandRequest {
+  string name = 1;  // e.g., 'get pressure'
+  string cmd  = 2;  // e.g., ''. Caution: direct commands are not officially supported. They are not guaranteed to work.
+}
+message PressureControlCommandResponse {
+  string name = 1;
+  string response = 2;
+}
+
+
+
+/**
+ * Message that indicates a connection request to the ImageServer/StroboCore.
+ */
+message ConnectToCoreImageServerRequest {
+  string host = 1;
+  int32  port = 2;
+}
+
+/**
+ * Message that denotes the result of a connection request to the ImageServer/StroboCore.
+ */
+message ConnectToCoreImageServerResponse {
+  bool   success = 1;
+  string message = 2;
+}
+
+/**
+ * Message that indicates a disconnect-request to the ImageServer/StroboCore.
+ */
+message DisconnectFromCoreImageServerRequest {
+}
+
+/**
+ * Message that denotes the result of a disconnect-request to the ImageServer/StroboCore.
+ */
+message DisconnectFromCoreImageServerResponse {
+  bool   success = 1;
+  string message = 2;
+}
+
+// ----------------------------------------
+// Liquid Classes and calibration curves
+// ----------------------------------------
+
+message SetCustomCalibrationCurveRequest {
+  int32 channel = 1;
+  CalibrationCurve curve = 2;
+}
+
+message SetCustomCalibrationCurveResponse {
+  int32 channel = 1;
+}
+
+message CalibrationCurve {
+  CalibrationCurveData data = 3;
+}
+
+message CalibrationCurveData {
+  repeated CalibrationCurvePoint point = 1;
+}
+
+message CalibrationCurvePoint {
+  double stroke = 1; // [um]
+  double volume = 2; // [nl]
+}
+
+
+

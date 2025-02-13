@@ -1,0 +1,20 @@
+# .gitignore 파일 예시
+
+# 빌드 결과물
+bin/
+obj/
+
+# Visual Studio 관련 파일
+.vs/
+.vscode/
+
+# Windows 시스템 파일
+Thumbs.db
+Desktop.ini
+
+# 로그 파일
+*.log
+
+# 사용자별 설정 파일
+*.user
+OpenCvSharpExtern.dll

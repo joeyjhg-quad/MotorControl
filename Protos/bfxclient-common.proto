@@ -1,0 +1,304 @@
+//
+// Copyright (C) 2022-2024 Biofluidix GmbH
+// All Rights Reserved.
+//
+
+syntax = "proto3";
+
+/**
+ * This package contains the common types used in the public remote protocol.
+ */
+package com.biofluidix.bfxclient.common.rpc;
+
+
+/**
+ * A closed path consisting of points.
+ */
+message Contour {
+  repeated  Point2d  points  = 1;
+  Rectangle  bounds          = 2;
+}
+
+/**
+ * A point denotes a location on the image.
+ */
+message Point2d {
+  int32 x = 1;  // [px]
+  int32 y = 2;  // [px]
+}
+
+/**
+ * A rectangle denotes a rectangular area on the image.
+ */
+message Rectangle {
+  int32 x      = 1; // [px]
+  int32 y      = 2; // [px]
+  int32 width  = 3; // [px]
+  int32 height = 4; // [px]
+}
+
+enum DropletPipeIntersectionResult {
+  NO_INTERSECTION       = 0;
+  FULL_INTERSECTION     = 1;
+  PARTIAL_INTERSECTION  = 2;
+}
+
+/**
+ * A droplet consists of a closed contour line,
+ * a center point, volume and circularity information.
+ */
+message Droplet {
+  Point2d center                   = 1; // [px]
+  double volume                    = 2; // [nl]
+  Contour contour                  = 3;
+  QualityMetrics quality           = 4;
+  Rectangle  boundsFg              = 5; // droplet fg bounds
+  Rectangle  boundsRoi             = 6; // droplet roi bounds
+  CollisionInfo collisionInfo      = 7; // collision info (see documentation below)
+
+  Image fgImage              = 11; // image of the droplet fg bounds
+  Image roiImage             = 12; // image of the droplet roi bounds
+
+  Image fgMaskImage          = 13; // image of the droplet fg mask
+  Image bgMaskImage          = 14; // image of the droplet bg mask
+
+  Image bcvMaskImage         = 15; // image of the droplet bcv mask
+
+  DropletPipeIntersectionResult pipeIntersectionResult = 8; // type of intersection with pipe
+  int32 edgeCollisionInfo          = 10; // index of the droplet that collides with the edge (left=1, top=2, right=4, bottom=8, none=0)
+
+  int32 roiCollisionInfo           = 9; // index of the droplet that collides with the roi (left=1, top=2, right=4, bottom=8, none=0)
+}
+
+/**
+ * Stores the indices of colliding bounding boxes. This information is important to check the validity of quality
+ * metrics and volume information. While the volume information itself is only affected by bounding box collisions,
+ * quality metrics are influenced by bounding boxes colliding with foreground and ROI rectangles.
+ *
+ * This is how the bounding box, foreground and roi look like:
+ *
+ *        // --------------------------------------------------------------------------
+ *        //
+ *        //
+ *        //              _________________________________
+ *        //             |                                 |
+ *        //             |                                 |
+ *        //             |      ____________________       |
+ *        //             |     |                    |      |
+ *        //             |     |    ____________    |      |
+ *        //             |     |   |    ****    |   |      |
+ *        //             |     |   | ********** |   |      |
+ *        //             |     |   |************|   |      |
+ *        //             |     |   |************|   |      |
+ *        //             |     |   | ********** |   |      |
+ *        //             |     |   |____****____|   |      |
+ *        //             |     |          ^         |      |
+ *        //             |     |__________|_________|      |
+ *        //             |        ^       |                |
+ *        //             |        |  Bounding Box (bbox)   |
+ *        //             |        |                        |
+ *        //             |    Foreground (fg)              |
+ *        //             |_________________________________|
+ *        //                              ^
+ *        //                              |
+ *        //                      Region of Interest (ROI)
+ *        //
+ *        // ---------------------------------------------------------------------------
+ *        //  Legend:  |
+ *        // ----------|
+ *        //                                   ______
+ *        //         **                       |      |
+ *        //        **** <- Droplet           |      | <- Region/Box
+ *        //         **                       |______|
+ *        //
+ *        // ---------------------------------------------------------------------------
+ */
+message CollisionInfo {
+  // indices of all droplets of the current frame whose bbox collides with this droplets bbox
+  repeated int32  collisions_bbox  = 1;
+  // indices of all droplets of the current frame whose fg-box collides with this droplets bbox
+  repeated int32  collisions_fg    = 2;
+  // indices of all droplets of the current frame whose roi-box collides with this droplets bbox
+  repeated int32  collisions_roi   = 3;
+}
+
+/**
+ * Images are currently stored as '.jpg' only. Other formats
+ * might be supported in the future. The 'width' and 'height'
+ * properties refer to the original image size. The jpeg image
+ * might be scaled down to improve the performance.
+ */
+message Image {
+  bytes data    = 1;
+  int32 width   = 2; // [px]
+  int32 height  = 3; // [px]
+  string format = 4; // 'jpg'
+}
+
+/**
+ * Contains the reference image (full size) and information about
+ * the detected upper and lower boundaries. Additionally, multiple images can be stored
+ * that allow noise and movement analysis.
+ */
+message ReferenceImageInfo {
+  repeated Contour contours            = 1;
+  // Segmented raw image.
+  Image            image               = 2;
+  // Raw images for determining minimal segmentation threshold above noise. (see minThreshold)
+  repeated Image   images              = 11;
+  // Minimal threshold for which the segmentation creates meaningful results.
+  int32            minThreshold        = 12;
+  // Region in which droplet detection takes place.
+  int32            roiTop              = 3;
+  int32            roiBottom           = 4;
+  int32            roiLeft             = 5;
+  int32            roiRight            = 6;
+  // Original image as acquired from camera. CAN be identical with
+  // one of the images contained in the field 'images'
+  Image            rawImage            = 7;
+  // Contours of the regions for which intensity clipping occurs.
+  repeated Contour overexposedContours = 8;
+  // Mask marking the image pixels of which the intensities are clipped.
+  Image            overexposureMask    = 9;
+  // If true intensity clipping occurred.
+  bool             overexposed         = 10;
+  // Acquisition timestamp
+  int64            timestamp           = 13; // [ms, posix epoch]
+
+  //
+  Point2d          brightnessCenter    = 14; // px coordinates of the center of the brightness contour
+
+  repeated PipeJetInfo pipeJets        = 15;
+
+  BackgroundMetrics backgroundMetrics   = 16;
+}
+
+message BackgroundMetrics {
+  // Bounds used for backgrounds metrics computation.
+  Rectangle roiBounds = 1;
+  // Std-dev of Background-Area intensity.
+  double stdDev       = 2;
+  // Maximal brightness difference between two pixels in Background-Area
+  double maxAbsDiff   = 3;
+}
+
+
+/**
+ * Contains quality metrics of the droplet (image quality and geometric information such as circularity).
+ *
+ * Depending on the application requirements, the client can log those metrics or even exclude droplets completely if
+ * they don't meet the requirements.
+ */
+message QualityMetrics {
+  double cnr         = 1; // contrast-to-noise-ratio (we aim for > 5)
+  double bcv         = 2; // between-class-variance
+  double nBCV        = 3; // normalized bcv, range: [0, 1]
+  double circularity = 4; // contour circularity, range: [0, 1]
+  int32  nPixels     = 5; // number of pixels in the droplet
+}
+
+// ----------------------------------
+
+/**
+ * A calibration command consists of a list of calibration entries that should be processed
+ */
+message CalibrationCommand {
+  repeated CalibrationEntry commands = 1;
+}
+
+/**
+ * A calibration entry specifies a calibration request. The channel to calibrate and the target volume
+ * are the most significant parameters.
+ */
+message CalibrationEntry {
+
+  int32  channel                 = 1;
+  double targetVolume            = 2; // [nL]
+  int32  maxSteps                = 3; // max number of steps to reach target volume
+  int32  numberOfValidationSteps = 4; // number of steps to validate the calibration
+  double relativeError           = 5; // [%]
+
+  reserved "roundness"; reserved 6;
+  reserved "cv";        reserved 7;
+
+  CalibrationResult result       = 8; // result of the calibration
+
+  bool ignoreSpecifiedResultAsInitialValue = 9;
+
+}
+
+/**
+ * Type of the calibration result.
+ */
+enum CalibrationType {
+  VALID   = 0;
+  INVALID = 1;
+  ERROR   = 2;
+  ABORTED = 3;
+}
+
+/**
+ * Result of the calibration.
+ */
+message CalibrationResult {
+  string          type    =  1;
+  int32  channel          =  2;
+  double targetVolume     =  3; // [nL]
+  double stroke           =  4; // [%]
+  double strokeRaw        =  5; // [um]
+  double sVel             =  6; // [um/ms]
+  double pressure         = 17; // [mbar]
+  double mean             =  7; // [nL]
+  double sd               =  8;
+  double cv               =  9; // [%]
+  double min              = 10; // [nL]
+  double max              = 11; // [nL]
+  double error            = 12; // [%]
+  double triggerDelay     = 13; // [us]
+  int64  timestamp        = 14; // [us]
+  int32  nTotalSteps      = 15;
+  int32  nValidationSteps = 16;
+}
+
+/**
+ * A rotated rectangle is defined by its center points, width, height and angle.
+ */
+message RotatedRect {
+  double center_x                                     = 1; // [px]
+  double center_y                                     = 2; // [px]
+
+  // width is defined as the distance between the left and right side of the rectangle
+  // that is, use the distance between the two points with the smallest y-coordinate and the two points with the largest y-coordinate,
+  // i.e., top-most and bottom-most points
+  double width                                        = 3; // [px]
+  // (left-most point is the point with the smallest x-coordinate, right-most point is the point with the largest x-coordinate)
+  // height is defined as the distance between the two points with the smallest x-coordinate and the two points with the largest x-coordinate,
+  // i.e., left-most and right-most points
+  double height                                       = 4; // [px]
+  double angle                                        = 5; // [deg]
+
+  com.biofluidix.bfxclient.common.rpc.Point2d p1      = 6; // [px]
+  com.biofluidix.bfxclient.common.rpc.Point2d p2      = 7; // [px]
+  com.biofluidix.bfxclient.common.rpc.Point2d p3      = 8; // [px]
+  com.biofluidix.bfxclient.common.rpc.Point2d p4      = 9; // [px]
+}
+
+message PipeJetInfo {
+  // com.biofluidix.bfxclient.common.rpc.Contour contour                  = 1;
+  reserved "contour"; reserved                                           1;
+  com.biofluidix.bfxclient.common.rpc.RotatedRect boundingRect        = 2;
+  reserved "focus_plane_angle_approx"; reserved                          3;
+  // com.biofluidix.bfxclient.common.rpc.QualityMetrics quality_metrics   = 4;
+  reserved "quality_metrics"; reserved                                   4;
+
+  // Image of the ROI contents
+  Image roiImgSegmented                                               = 5;
+  Image roiImgRaw                                                     = 6;
+
+  // ROI of the detected pipe
+  Rectangle roiBounds                                                = 7;
+
+  // Threshold used to segment the image.
+  int32 pipeDetectionThreshold                                        = 8;
+}
+
