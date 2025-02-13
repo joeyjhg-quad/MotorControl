@@ -47,7 +47,7 @@ namespace MotorControl
             this.Location = new System.Drawing.Point(0, 0); // 화면의 (0, 0) 위치로 설정
 
             SetAllValues(textFileManager.GetAllValues());
-            UpdatePanel();
+            //UpdatePanel();
             motorControlManager.Open();
             motorControlManager.RebootAndStart();
             motorControlManager.ServoOn(1);
@@ -678,7 +678,7 @@ namespace MotorControl
             // SetValue 함수 호출
             textFileManager.SetValue(ColumnIndex.SAVEXYZ, val);
 
-            UpdatePanel();
+            //UpdatePanel();
             tb_SaveName.Text = "";
             //TextBox textBox = new TextBox();
             //textBox.Location = new System.Drawing.Point(100, currentY);
@@ -688,84 +688,84 @@ namespace MotorControl
             //button.Location = new System.Drawing.Point(250, currentY);
 
         }
-        private void UpdatePanel()
-        {
-            // 기존 컨트롤 초기화
-            panel_SaveXYZ.Controls.Clear();
+        //private void UpdatePanel()
+        //{
+        //    // 기존 컨트롤 초기화
+        //    panel_SaveXYZ.Controls.Clear();
 
-            // GetValue_XYZ()로 값을 받음
-            string[][] xyzValues = textFileManager.GetValue_XYZ();
+        //    // GetValue_XYZ()로 값을 받음
+        //    string[][] xyzValues = textFileManager.GetValue_XYZ();
 
-            if (xyzValues == null)
-            {
-                return; // 값이 없다면 아무 것도 추가하지 않음
-            }
+        //    if (xyzValues == null)
+        //    {
+        //        return; // 값이 없다면 아무 것도 추가하지 않음
+        //    }
 
-            // 각 항목에 대해 라벨과 버튼 추가
-            int yOffset = 10; // 시작 위치
+        //    // 각 항목에 대해 라벨과 버튼 추가
+        //    int yOffset = 10; // 시작 위치
 
-            for (int i = 0; i < xyzValues.Length; i++)
-            {
-                // XYZ 값
-                string name = xyzValues[i][0];
-                string pX = xyzValues[i][1];
-                string pY = xyzValues[i][2];
-                string pZ = xyzValues[i][3];
+        //    for (int i = 0; i < xyzValues.Length; i++)
+        //    {
+        //        // XYZ 값
+        //        string name = xyzValues[i][0];
+        //        string pX = xyzValues[i][1];
+        //        string pY = xyzValues[i][2];
+        //        string pZ = xyzValues[i][3];
 
-                // 라벨 1: Name
-                Label lblName = new Label();
-                lblName.Text = name;
-                lblName.Size = new System.Drawing.Size(70, 20); // 너비 70, 높이 20
-                lblName.Location = new System.Drawing.Point(10, yOffset);
-                panel_SaveXYZ.Controls.Add(lblName);
+        //        // 라벨 1: Name
+        //        Label lblName = new Label();
+        //        lblName.Text = name;
+        //        lblName.Size = new System.Drawing.Size(70, 20); // 너비 70, 높이 20
+        //        lblName.Location = new System.Drawing.Point(10, yOffset);
+        //        panel_SaveXYZ.Controls.Add(lblName);
 
-                // 라벨 2: X
-                Label lblX = new Label();
-                lblX.Text = pX;
-                lblX.AutoSize = true;
-                lblX.Size = new System.Drawing.Size(30, 20); // 너비 50, 높이 20
-                lblX.Location = new System.Drawing.Point(80, yOffset);
-                panel_SaveXYZ.Controls.Add(lblX);
+        //        // 라벨 2: X
+        //        Label lblX = new Label();
+        //        lblX.Text = pX;
+        //        lblX.AutoSize = true;
+        //        lblX.Size = new System.Drawing.Size(30, 20); // 너비 50, 높이 20
+        //        lblX.Location = new System.Drawing.Point(80, yOffset);
+        //        panel_SaveXYZ.Controls.Add(lblX);
 
-                // 라벨 3: Y
-                Label lblY = new Label();
-                lblY.Text = pY;
-                lblY.AutoSize = true;
-                lblY.Size = new System.Drawing.Size(30, 20);
-                lblY.Location = new System.Drawing.Point(125, yOffset);
-                panel_SaveXYZ.Controls.Add(lblY);
+        //        // 라벨 3: Y
+        //        Label lblY = new Label();
+        //        lblY.Text = pY;
+        //        lblY.AutoSize = true;
+        //        lblY.Size = new System.Drawing.Size(30, 20);
+        //        lblY.Location = new System.Drawing.Point(125, yOffset);
+        //        panel_SaveXYZ.Controls.Add(lblY);
 
-                // 라벨 4: Z
-                Label lblZ = new Label();
-                lblZ.Text = pZ;
-                lblZ.AutoSize = true;
-                lblZ.Size = new System.Drawing.Size(30, 20);
-                lblZ.Location = new System.Drawing.Point(170, yOffset);
-                panel_SaveXYZ.Controls.Add(lblZ);
+        //        // 라벨 4: Z
+        //        Label lblZ = new Label();
+        //        lblZ.Text = pZ;
+        //        lblZ.AutoSize = true;
+        //        lblZ.Size = new System.Drawing.Size(30, 20);
+        //        lblZ.Location = new System.Drawing.Point(170, yOffset);
+        //        panel_SaveXYZ.Controls.Add(lblZ);
 
-                // 이동 버튼
-                System.Windows.Forms.Button btnMove = new System.Windows.Forms.Button();
-                btnMove.Text = "이동";
-                btnMove.Size = new System.Drawing.Size(40, 20);
-                btnMove.Tag = new string[] { pX, pY, pZ }; // X, Y, Z 값을 Tag에 저장
-                btnMove.Location = new System.Drawing.Point(210, yOffset - 5);
-                btnMove.Click += SequenceMove_Click; // 이벤트 핸들러 연결
-                panel_SaveXYZ.Controls.Add(btnMove);
+        //        // 이동 버튼
+        //        System.Windows.Forms.Button btnMove = new System.Windows.Forms.Button();
+        //        btnMove.Text = "이동";
+        //        btnMove.Size = new System.Drawing.Size(40, 20);
+        //        btnMove.Tag = new string[] { pX, pY, pZ }; // X, Y, Z 값을 Tag에 저장
+        //        btnMove.Location = new System.Drawing.Point(210, yOffset - 5);
+        //        btnMove.Click += SequenceMove_Click; // 이벤트 핸들러 연결
+        //        panel_SaveXYZ.Controls.Add(btnMove);
 
-                // 삭제 버튼
-                System.Windows.Forms.Button btnDelete = new System.Windows.Forms.Button();
-                btnDelete.Text = "삭제";
-                btnDelete.Size = new System.Drawing.Size(40, 20);
-                btnDelete.Tag = i; // i(인덱스)를 Tag에 저장
-                btnDelete.Location = new System.Drawing.Point(260, yOffset - 5);
-                btnDelete.Click += DeleteXYZ_Click; // 이벤트 핸들러 연결
-                panel_SaveXYZ.Controls.Add(btnDelete);
+        //        // 삭제 버튼
+        //        System.Windows.Forms.Button btnDelete = new System.Windows.Forms.Button();
+        //        btnDelete.Text = "삭제";
+        //        btnDelete.Size = new System.Drawing.Size(40, 20);
+        //        btnDelete.Tag = i; // i(인덱스)를 Tag에 저장
+        //        btnDelete.Location = new System.Drawing.Point(260, yOffset - 5);
+        //        btnDelete.Click += DeleteXYZ_Click; // 이벤트 핸들러 연결
+        //        panel_SaveXYZ.Controls.Add(btnDelete);
 
-                // Y축 위치 업데이트 (다음 항목을 아래로 배치)
-                yOffset += 30; // 각 항목마다 30px씩 아래로 내려감
-            }
+        //        // Y축 위치 업데이트 (다음 항목을 아래로 배치)
+        //        yOffset += 30; // 각 항목마다 30px씩 아래로 내려감
+        //    }
 
-        }
+        //}
         private void SequenceMove_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.Button btn = sender as System.Windows.Forms.Button;
@@ -805,7 +805,7 @@ namespace MotorControl
             int index = (int)btn.Tag; // 버튼에 저장된 인덱스 가져오기
 
             textFileManager.DeleteXYZ(index); // 파일에서 해당 항목 삭제
-            UpdatePanel(); // UI 갱신
+            //UpdatePanel(); // UI 갱신
         }
 
         private void btn_HomeReturn_Click(object sender, EventArgs e)

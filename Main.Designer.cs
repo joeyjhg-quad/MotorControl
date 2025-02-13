@@ -30,20 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             pictureBox1 = new PictureBox();
-            groupBox1 = new GroupBox();
             btn_HomeReturn = new Button();
-            btn_Disconnect = new Button();
-            btn_Connect = new Button();
-            groupBox3 = new GroupBox();
-            label5 = new Label();
-            tb_SaveName = new TextBox();
-            label8 = new Label();
-            label6 = new Label();
-            label4 = new Label();
-            btn_PositionSave = new Button();
-            tb_Position_Z = new TextBox();
-            tb_Position_Y = new TextBox();
-            tb_Position_X = new TextBox();
             groupBox4 = new GroupBox();
             btn_ExpansionCustom = new Button();
             label26 = new Label();
@@ -77,13 +64,11 @@
             button2 = new Button();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
-            label41 = new Label();
-            btn_Dispensing_Timer_Stop = new Button();
-            tb_Processing_delay = new TextBox();
-            label40 = new Label();
-            btn_ImgProcessing = new Button();
-            tb_Dispensing_delay = new TextBox();
-            btn_Dispencing_Timer = new Button();
+            groupBox6 = new GroupBox();
+            label36 = new Label();
+            tb_Expanded = new TextBox();
+            btn_Fullscreen = new Button();
+            btn_Expanded = new Button();
             groupBox2 = new GroupBox();
             btn_Distance_Setting_Auto = new Button();
             btn_Distance_Setting_Z = new Button();
@@ -116,6 +101,15 @@
             tabPage2 = new TabPage();
             btn_ImgSave = new Button();
             tabPage3 = new TabPage();
+            groupBox3 = new GroupBox();
+            label5 = new Label();
+            tb_SaveName = new TextBox();
+            label8 = new Label();
+            label6 = new Label();
+            label4 = new Label();
+            tb_Position_Z = new TextBox();
+            tb_Position_Y = new TextBox();
+            tb_Position_X = new TextBox();
             btn_Lamp_Change = new Button();
             groupBox8 = new GroupBox();
             label16 = new Label();
@@ -158,31 +152,69 @@
             tb_AREA_HIGH = new TextBox();
             tb_AREA_LOW = new TextBox();
             tabPage4 = new TabPage();
-            btn_Expanded = new Button();
-            groupBox6 = new GroupBox();
-            label36 = new Label();
-            tb_Expanded = new TextBox();
-            btn_Fullscreen = new Button();
-            panel_SaveXYZ = new Panel();
+            label41 = new Label();
+            btn_Dispensing_Timer_Stop = new Button();
+            tb_Processing_delay = new TextBox();
+            label40 = new Label();
+            btn_ImgProcessing = new Button();
+            tb_Dispensing_delay = new TextBox();
+            btn_Dispencing_Timer = new Button();
             btn_Dispensing_Ones = new Button();
             dpTimer = new System.Windows.Forms.Timer(components);
             bindingSource1 = new BindingSource(components);
             btn_BFX_Capture = new Button();
+            gb_MovePosition = new GroupBox();
+            label43 = new Label();
+            label44 = new Label();
+            label45 = new Label();
+            textBox1 = new TextBox();
+            label46 = new Label();
+            textBox2 = new TextBox();
+            textBox3 = new TextBox();
+            button3 = new Button();
+            button4 = new Button();
+            textBox4 = new TextBox();
+            textBox5 = new TextBox();
+            label47 = new Label();
+            textBox6 = new TextBox();
+            label48 = new Label();
+            label49 = new Label();
+            label50 = new Label();
+            button5 = new Button();
+            button6 = new Button();
+            textBox7 = new TextBox();
+            textBox8 = new TextBox();
+            label51 = new Label();
+            textBox9 = new TextBox();
+            label52 = new Label();
+            label53 = new Label();
+            label54 = new Label();
+            button7 = new Button();
+            button8 = new Button();
+            textBox10 = new TextBox();
+            textBox11 = new TextBox();
+            label55 = new Label();
+            textBox12 = new TextBox();
+            label56 = new Label();
+            label57 = new Label();
+            label58 = new Label();
+            button9 = new Button();
+            button10 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            groupBox1.SuspendLayout();
-            groupBox3.SuspendLayout();
             groupBox4.SuspendLayout();
             groupBox7.SuspendLayout();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
+            groupBox6.SuspendLayout();
             groupBox2.SuspendLayout();
             tabPage2.SuspendLayout();
             tabPage3.SuspendLayout();
+            groupBox3.SuspendLayout();
             groupBox8.SuspendLayout();
             groupBox9.SuspendLayout();
             tabPage4.SuspendLayout();
-            groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
+            gb_MovePosition.SuspendLayout();
             SuspendLayout();
             // 
             // pictureBox1
@@ -194,142 +226,15 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(btn_HomeReturn);
-            groupBox1.Controls.Add(btn_Disconnect);
-            groupBox1.Controls.Add(btn_Connect);
-            groupBox1.Location = new Point(12, 744);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(142, 148);
-            groupBox1.TabIndex = 1;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "연결";
-            // 
             // btn_HomeReturn
             // 
-            btn_HomeReturn.Location = new Point(80, 20);
+            btn_HomeReturn.Location = new Point(831, 783);
             btn_HomeReturn.Name = "btn_HomeReturn";
-            btn_HomeReturn.Size = new Size(56, 128);
+            btn_HomeReturn.Size = new Size(69, 109);
             btn_HomeReturn.TabIndex = 20;
             btn_HomeReturn.Text = "원점\r\n복귀";
             btn_HomeReturn.UseVisualStyleBackColor = true;
             btn_HomeReturn.Click += btn_HomeReturn_Click;
-            // 
-            // btn_Disconnect
-            // 
-            btn_Disconnect.Location = new Point(6, 87);
-            btn_Disconnect.Name = "btn_Disconnect";
-            btn_Disconnect.Size = new Size(68, 61);
-            btn_Disconnect.TabIndex = 2;
-            btn_Disconnect.Text = "연결 해제";
-            btn_Disconnect.UseVisualStyleBackColor = true;
-            btn_Disconnect.Click += btn_Disconnect_Click;
-            // 
-            // btn_Connect
-            // 
-            btn_Connect.Location = new Point(6, 20);
-            btn_Connect.Name = "btn_Connect";
-            btn_Connect.Size = new Size(68, 56);
-            btn_Connect.TabIndex = 2;
-            btn_Connect.Text = "연결";
-            btn_Connect.UseVisualStyleBackColor = true;
-            btn_Connect.Click += btn_Connect_Click;
-            // 
-            // groupBox3
-            // 
-            groupBox3.Controls.Add(label5);
-            groupBox3.Controls.Add(tb_SaveName);
-            groupBox3.Controls.Add(label8);
-            groupBox3.Controls.Add(label6);
-            groupBox3.Controls.Add(label4);
-            groupBox3.Controls.Add(btn_PositionSave);
-            groupBox3.Controls.Add(tb_Position_Z);
-            groupBox3.Controls.Add(tb_Position_Y);
-            groupBox3.Controls.Add(tb_Position_X);
-            groupBox3.Location = new Point(6, 6);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(268, 100);
-            groupBox3.TabIndex = 3;
-            groupBox3.TabStop = false;
-            groupBox3.Text = "현재 위치";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(29, 72);
-            label5.Name = "label5";
-            label5.Size = new Size(67, 15);
-            label5.TabIndex = 12;
-            label5.Text = "저장할이름";
-            // 
-            // tb_SaveName
-            // 
-            tb_SaveName.Location = new Point(100, 69);
-            tb_SaveName.Name = "tb_SaveName";
-            tb_SaveName.Size = new Size(75, 23);
-            tb_SaveName.TabIndex = 3;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new Point(178, 37);
-            label8.Name = "label8";
-            label8.Size = new Size(14, 15);
-            label8.TabIndex = 1;
-            label8.Text = "Z";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(94, 37);
-            label6.Name = "label6";
-            label6.Size = new Size(14, 15);
-            label6.TabIndex = 1;
-            label6.Text = "Y";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(9, 37);
-            label4.Name = "label4";
-            label4.Size = new Size(14, 15);
-            label4.TabIndex = 1;
-            label4.Text = "X";
-            // 
-            // btn_PositionSave
-            // 
-            btn_PositionSave.Location = new Point(182, 69);
-            btn_PositionSave.Name = "btn_PositionSave";
-            btn_PositionSave.Size = new Size(75, 23);
-            btn_PositionSave.TabIndex = 11;
-            btn_PositionSave.Text = "위치 저장";
-            btn_PositionSave.UseVisualStyleBackColor = true;
-            btn_PositionSave.Click += button7_Click;
-            // 
-            // tb_Position_Z
-            // 
-            tb_Position_Z.Location = new Point(197, 33);
-            tb_Position_Z.Name = "tb_Position_Z";
-            tb_Position_Z.ReadOnly = true;
-            tb_Position_Z.Size = new Size(60, 23);
-            tb_Position_Z.TabIndex = 0;
-            // 
-            // tb_Position_Y
-            // 
-            tb_Position_Y.Location = new Point(112, 33);
-            tb_Position_Y.Name = "tb_Position_Y";
-            tb_Position_Y.ReadOnly = true;
-            tb_Position_Y.Size = new Size(60, 23);
-            tb_Position_Y.TabIndex = 0;
-            // 
-            // tb_Position_X
-            // 
-            tb_Position_X.Location = new Point(28, 33);
-            tb_Position_X.Name = "tb_Position_X";
-            tb_Position_X.ReadOnly = true;
-            tb_Position_X.Size = new Size(60, 23);
-            tb_Position_X.TabIndex = 0;
             // 
             // groupBox4
             // 
@@ -691,16 +596,9 @@
             // tabPage1
             // 
             tabPage1.BackColor = SystemColors.ControlLight;
-            tabPage1.Controls.Add(label41);
-            tabPage1.Controls.Add(btn_Dispensing_Timer_Stop);
-            tabPage1.Controls.Add(tb_Processing_delay);
-            tabPage1.Controls.Add(label40);
-            tabPage1.Controls.Add(btn_ImgProcessing);
-            tabPage1.Controls.Add(tb_Dispensing_delay);
-            tabPage1.Controls.Add(btn_Dispencing_Timer);
+            tabPage1.Controls.Add(groupBox6);
             tabPage1.Controls.Add(groupBox2);
             tabPage1.Controls.Add(groupBox4);
-            tabPage1.Controls.Add(groupBox3);
             tabPage1.Controls.Add(groupBox7);
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
@@ -709,81 +607,64 @@
             tabPage1.TabIndex = 0;
             tabPage1.Text = "모터";
             // 
-            // label41
+            // groupBox6
             // 
-            label41.AutoSize = true;
-            label41.Location = new Point(405, 671);
-            label41.Name = "label41";
-            label41.Size = new Size(43, 15);
-            label41.TabIndex = 41;
-            label41.Text = "딜레이";
+            groupBox6.Controls.Add(label36);
+            groupBox6.Controls.Add(tb_Expanded);
+            groupBox6.Controls.Add(btn_Fullscreen);
+            groupBox6.Controls.Add(btn_Expanded);
+            groupBox6.Location = new Point(6, 6);
+            groupBox6.Name = "groupBox6";
+            groupBox6.Size = new Size(277, 100);
+            groupBox6.TabIndex = 43;
+            groupBox6.TabStop = false;
+            groupBox6.Text = "확장";
             // 
-            // btn_Dispensing_Timer_Stop
+            // label36
             // 
-            btn_Dispensing_Timer_Stop.Enabled = false;
-            btn_Dispensing_Timer_Stop.Location = new Point(114, 661);
-            btn_Dispensing_Timer_Stop.Name = "btn_Dispensing_Timer_Stop";
-            btn_Dispensing_Timer_Stop.Size = new Size(86, 34);
-            btn_Dispensing_Timer_Stop.TabIndex = 41;
-            btn_Dispensing_Timer_Stop.Text = "정지";
-            btn_Dispensing_Timer_Stop.UseVisualStyleBackColor = true;
-            btn_Dispensing_Timer_Stop.Click += btn_Dispensing_Timer_Stop_Click;
+            label36.AutoSize = true;
+            label36.Location = new Point(117, 44);
+            label36.Name = "label36";
+            label36.Size = new Size(17, 15);
+            label36.TabIndex = 19;
+            label36.Text = "%";
             // 
-            // tb_Processing_delay
+            // tb_Expanded
             // 
-            tb_Processing_delay.Location = new Point(408, 689);
-            tb_Processing_delay.Name = "tb_Processing_delay";
-            tb_Processing_delay.Size = new Size(37, 23);
-            tb_Processing_delay.TabIndex = 42;
-            tb_Processing_delay.Text = "400";
+            tb_Expanded.Location = new Point(75, 39);
+            tb_Expanded.Name = "tb_Expanded";
+            tb_Expanded.Size = new Size(36, 23);
+            tb_Expanded.TabIndex = 18;
+            tb_Expanded.Text = "150";
+            tb_Expanded.TextAlign = HorizontalAlignment.Center;
             // 
-            // label40
+            // btn_Fullscreen
             // 
-            label40.AutoSize = true;
-            label40.Location = new Point(114, 705);
-            label40.Name = "label40";
-            label40.Size = new Size(43, 15);
-            label40.TabIndex = 39;
-            label40.Text = "딜레이";
+            btn_Fullscreen.Location = new Point(140, 20);
+            btn_Fullscreen.Name = "btn_Fullscreen";
+            btn_Fullscreen.Size = new Size(129, 56);
+            btn_Fullscreen.TabIndex = 17;
+            btn_Fullscreen.Text = "전체화면";
+            btn_Fullscreen.UseVisualStyleBackColor = true;
+            btn_Fullscreen.Click += btn_Fullscreen_Click;
             // 
-            // btn_ImgProcessing
+            // btn_Expanded
             // 
-            btn_ImgProcessing.Location = new Point(206, 661);
-            btn_ImgProcessing.Name = "btn_ImgProcessing";
-            btn_ImgProcessing.Size = new Size(199, 64);
-            btn_ImgProcessing.TabIndex = 20;
-            btn_ImgProcessing.Text = "Img Processing";
-            btn_ImgProcessing.UseVisualStyleBackColor = true;
-            btn_ImgProcessing.Click += btn_ImgProcessing_Click;
-            // 
-            // tb_Dispensing_delay
-            // 
-            tb_Dispensing_delay.Location = new Point(161, 702);
-            tb_Dispensing_delay.Name = "tb_Dispensing_delay";
-            tb_Dispensing_delay.Size = new Size(37, 23);
-            tb_Dispensing_delay.TabIndex = 40;
-            tb_Dispensing_delay.Text = "1000";
-            // 
-            // btn_Dispencing_Timer
-            // 
-            btn_Dispencing_Timer.Font = new Font("맑은 고딕", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 129);
-            btn_Dispencing_Timer.Location = new Point(3, 661);
-            btn_Dispencing_Timer.Name = "btn_Dispencing_Timer";
-            btn_Dispencing_Timer.Size = new Size(105, 63);
-            btn_Dispencing_Timer.TabIndex = 39;
-            btn_Dispencing_Timer.Text = "느리게\r\n쏘기";
-            btn_Dispencing_Timer.UseVisualStyleBackColor = true;
-            btn_Dispencing_Timer.Click += btn_Dispencing_Timer_Click;
+            btn_Expanded.BackColor = SystemColors.ControlLight;
+            btn_Expanded.Location = new Point(6, 20);
+            btn_Expanded.Name = "btn_Expanded";
+            btn_Expanded.Size = new Size(63, 56);
+            btn_Expanded.TabIndex = 17;
+            btn_Expanded.Text = "확대";
+            btn_Expanded.UseVisualStyleBackColor = false;
+            btn_Expanded.Click += btn_Expanded_Click;
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(btn_Distance_Setting_Auto);
             groupBox2.Controls.Add(btn_Distance_Setting_Z);
             groupBox2.Controls.Add(btn_Dispensing_Cam_Position_Set);
             groupBox2.Controls.Add(btn_Dispensing_Position_Set);
-            groupBox2.Controls.Add(btn_Distance_Save);
             groupBox2.Controls.Add(btn_Distance_OK);
-            groupBox2.Controls.Add(btn_Distance_Setting);
             groupBox2.Controls.Add(label39);
             groupBox2.Controls.Add(tb_Distance_X);
             groupBox2.Controls.Add(label38);
@@ -814,7 +695,7 @@
             // 
             // btn_Distance_Setting_Auto
             // 
-            btn_Distance_Setting_Auto.Location = new Point(112, 132);
+            btn_Distance_Setting_Auto.Location = new Point(124, 866);
             btn_Distance_Setting_Auto.Name = "btn_Distance_Setting_Auto";
             btn_Distance_Setting_Auto.Size = new Size(80, 23);
             btn_Distance_Setting_Auto.TabIndex = 39;
@@ -854,7 +735,7 @@
             // 
             // btn_Distance_Save
             // 
-            btn_Distance_Save.Location = new Point(303, 132);
+            btn_Distance_Save.Location = new Point(219, 866);
             btn_Distance_Save.Name = "btn_Distance_Save";
             btn_Distance_Save.Size = new Size(75, 23);
             btn_Distance_Save.TabIndex = 37;
@@ -875,7 +756,7 @@
             // 
             // btn_Distance_Setting
             // 
-            btn_Distance_Setting.Location = new Point(5, 132);
+            btn_Distance_Setting.Location = new Point(17, 866);
             btn_Distance_Setting.Name = "btn_Distance_Setting";
             btn_Distance_Setting.Size = new Size(97, 23);
             btn_Distance_Setting.TabIndex = 37;
@@ -1091,6 +972,7 @@
             // tabPage3
             // 
             tabPage3.BackColor = SystemColors.ControlLight;
+            tabPage3.Controls.Add(groupBox3);
             tabPage3.Controls.Add(btn_Lamp_Change);
             tabPage3.Controls.Add(groupBox8);
             tabPage3.Controls.Add(label42);
@@ -1124,6 +1006,90 @@
             tabPage3.Size = new Size(451, 730);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "세부 설정";
+            // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(label5);
+            groupBox3.Controls.Add(tb_SaveName);
+            groupBox3.Controls.Add(label8);
+            groupBox3.Controls.Add(label6);
+            groupBox3.Controls.Add(label4);
+            groupBox3.Controls.Add(tb_Position_Z);
+            groupBox3.Controls.Add(tb_Position_Y);
+            groupBox3.Controls.Add(tb_Position_X);
+            groupBox3.Location = new Point(18, 525);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(268, 100);
+            groupBox3.TabIndex = 41;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "현재 위치";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(29, 72);
+            label5.Name = "label5";
+            label5.Size = new Size(67, 15);
+            label5.TabIndex = 12;
+            label5.Text = "저장할이름";
+            // 
+            // tb_SaveName
+            // 
+            tb_SaveName.Location = new Point(100, 69);
+            tb_SaveName.Name = "tb_SaveName";
+            tb_SaveName.Size = new Size(75, 23);
+            tb_SaveName.TabIndex = 3;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(178, 37);
+            label8.Name = "label8";
+            label8.Size = new Size(14, 15);
+            label8.TabIndex = 1;
+            label8.Text = "Z";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(94, 37);
+            label6.Name = "label6";
+            label6.Size = new Size(14, 15);
+            label6.TabIndex = 1;
+            label6.Text = "Y";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(9, 37);
+            label4.Name = "label4";
+            label4.Size = new Size(14, 15);
+            label4.TabIndex = 1;
+            label4.Text = "X";
+            // 
+            // tb_Position_Z
+            // 
+            tb_Position_Z.Location = new Point(197, 33);
+            tb_Position_Z.Name = "tb_Position_Z";
+            tb_Position_Z.ReadOnly = true;
+            tb_Position_Z.Size = new Size(60, 23);
+            tb_Position_Z.TabIndex = 0;
+            // 
+            // tb_Position_Y
+            // 
+            tb_Position_Y.Location = new Point(112, 33);
+            tb_Position_Y.Name = "tb_Position_Y";
+            tb_Position_Y.ReadOnly = true;
+            tb_Position_Y.Size = new Size(60, 23);
+            tb_Position_Y.TabIndex = 0;
+            // 
+            // tb_Position_X
+            // 
+            tb_Position_X.Location = new Point(28, 33);
+            tb_Position_X.Name = "tb_Position_X";
+            tb_Position_X.ReadOnly = true;
+            tb_Position_X.Size = new Size(60, 23);
+            tb_Position_X.TabIndex = 0;
             // 
             // btn_Lamp_Change
             // 
@@ -1510,72 +1476,78 @@
             tabPage4.Text = "로그";
             tabPage4.UseVisualStyleBackColor = true;
             // 
-            // btn_Expanded
+            // label41
             // 
-            btn_Expanded.BackColor = SystemColors.ControlLight;
-            btn_Expanded.Location = new Point(6, 20);
-            btn_Expanded.Name = "btn_Expanded";
-            btn_Expanded.Size = new Size(63, 56);
-            btn_Expanded.TabIndex = 17;
-            btn_Expanded.Text = "확대";
-            btn_Expanded.UseVisualStyleBackColor = false;
-            btn_Expanded.Click += btn_Expanded_Click;
+            label41.AutoSize = true;
+            label41.Location = new Point(540, 820);
+            label41.Name = "label41";
+            label41.Size = new Size(43, 15);
+            label41.TabIndex = 41;
+            label41.Text = "딜레이";
             // 
-            // groupBox6
+            // btn_Dispensing_Timer_Stop
             // 
-            groupBox6.Controls.Add(label36);
-            groupBox6.Controls.Add(tb_Expanded);
-            groupBox6.Controls.Add(btn_Fullscreen);
-            groupBox6.Controls.Add(btn_Expanded);
-            groupBox6.Location = new Point(166, 744);
-            groupBox6.Name = "groupBox6";
-            groupBox6.Size = new Size(141, 148);
-            groupBox6.TabIndex = 18;
-            groupBox6.TabStop = false;
-            groupBox6.Text = "확장";
+            btn_Dispensing_Timer_Stop.Enabled = false;
+            btn_Dispensing_Timer_Stop.Location = new Point(499, 712);
+            btn_Dispensing_Timer_Stop.Name = "btn_Dispensing_Timer_Stop";
+            btn_Dispensing_Timer_Stop.Size = new Size(86, 34);
+            btn_Dispensing_Timer_Stop.TabIndex = 41;
+            btn_Dispensing_Timer_Stop.Text = "정지";
+            btn_Dispensing_Timer_Stop.UseVisualStyleBackColor = true;
+            btn_Dispensing_Timer_Stop.Click += btn_Dispensing_Timer_Stop_Click;
             // 
-            // label36
+            // tb_Processing_delay
             // 
-            label36.AutoSize = true;
-            label36.Location = new Point(117, 44);
-            label36.Name = "label36";
-            label36.Size = new Size(17, 15);
-            label36.TabIndex = 19;
-            label36.Text = "%";
+            tb_Processing_delay.Location = new Point(543, 838);
+            tb_Processing_delay.Name = "tb_Processing_delay";
+            tb_Processing_delay.Size = new Size(37, 23);
+            tb_Processing_delay.TabIndex = 42;
+            tb_Processing_delay.Text = "200";
             // 
-            // tb_Expanded
+            // label40
             // 
-            tb_Expanded.Location = new Point(75, 39);
-            tb_Expanded.Name = "tb_Expanded";
-            tb_Expanded.Size = new Size(36, 23);
-            tb_Expanded.TabIndex = 18;
-            tb_Expanded.Text = "150";
-            tb_Expanded.TextAlign = HorizontalAlignment.Center;
+            label40.AutoSize = true;
+            label40.Location = new Point(499, 756);
+            label40.Name = "label40";
+            label40.Size = new Size(43, 15);
+            label40.TabIndex = 39;
+            label40.Text = "딜레이";
             // 
-            // btn_Fullscreen
+            // btn_ImgProcessing
             // 
-            btn_Fullscreen.Location = new Point(6, 87);
-            btn_Fullscreen.Name = "btn_Fullscreen";
-            btn_Fullscreen.Size = new Size(129, 56);
-            btn_Fullscreen.TabIndex = 17;
-            btn_Fullscreen.Text = "전체화면";
-            btn_Fullscreen.UseVisualStyleBackColor = true;
-            btn_Fullscreen.Click += btn_Fullscreen_Click;
+            btn_ImgProcessing.Location = new Point(382, 805);
+            btn_ImgProcessing.Name = "btn_ImgProcessing";
+            btn_ImgProcessing.Size = new Size(155, 64);
+            btn_ImgProcessing.TabIndex = 20;
+            btn_ImgProcessing.Text = "Img Processing";
+            btn_ImgProcessing.UseVisualStyleBackColor = true;
+            btn_ImgProcessing.Click += btn_ImgProcessing_Click;
             // 
-            // panel_SaveXYZ
+            // tb_Dispensing_delay
             // 
-            panel_SaveXYZ.AutoScroll = true;
-            panel_SaveXYZ.Location = new Point(12, 606);
-            panel_SaveXYZ.Name = "panel_SaveXYZ";
-            panel_SaveXYZ.Size = new Size(341, 132);
-            panel_SaveXYZ.TabIndex = 19;
+            tb_Dispensing_delay.Location = new Point(546, 753);
+            tb_Dispensing_delay.Name = "tb_Dispensing_delay";
+            tb_Dispensing_delay.Size = new Size(37, 23);
+            tb_Dispensing_delay.TabIndex = 40;
+            tb_Dispensing_delay.Text = "1000";
+            // 
+            // btn_Dispencing_Timer
+            // 
+            btn_Dispencing_Timer.Font = new Font("맑은 고딕", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            btn_Dispencing_Timer.Location = new Point(382, 712);
+            btn_Dispencing_Timer.Name = "btn_Dispencing_Timer";
+            btn_Dispencing_Timer.Size = new Size(111, 63);
+            btn_Dispencing_Timer.TabIndex = 39;
+            btn_Dispencing_Timer.Text = "느리게\r\n쏘기";
+            btn_Dispencing_Timer.UseVisualStyleBackColor = true;
+            btn_Dispencing_Timer.Click += btn_Dispencing_Timer_Click;
             // 
             // btn_Dispensing_Ones
             // 
             btn_Dispensing_Ones.Font = new Font("맑은 고딕", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 129);
-            btn_Dispensing_Ones.Location = new Point(359, 607);
+            btn_Dispensing_Ones.Location = new Point(382, 601);
             btn_Dispensing_Ones.Name = "btn_Dispensing_Ones";
-            btn_Dispensing_Ones.Size = new Size(228, 131);
+            btn_Dispensing_Ones.Size = new Size(205, 105);
             btn_Dispensing_Ones.TabIndex = 22;
             btn_Dispensing_Ones.Text = "디스펜싱";
             btn_Dispensing_Ones.UseVisualStyleBackColor = true;
@@ -1588,71 +1560,428 @@
             // 
             // btn_BFX_Capture
             // 
-            btn_BFX_Capture.Location = new Point(313, 758);
+            btn_BFX_Capture.Location = new Point(597, 783);
             btn_BFX_Capture.Name = "btn_BFX_Capture";
-            btn_BFX_Capture.Size = new Size(100, 129);
+            btn_BFX_Capture.Size = new Size(72, 109);
             btn_BFX_Capture.TabIndex = 23;
             btn_BFX_Capture.Text = "화면캡쳐";
             btn_BFX_Capture.UseVisualStyleBackColor = true;
             btn_BFX_Capture.Click += btn_BFX_Capture_Click;
+            // 
+            // gb_MovePosition
+            // 
+            gb_MovePosition.Controls.Add(button10);
+            gb_MovePosition.Controls.Add(button8);
+            gb_MovePosition.Controls.Add(button6);
+            gb_MovePosition.Controls.Add(button4);
+            gb_MovePosition.Controls.Add(button9);
+            gb_MovePosition.Controls.Add(button7);
+            gb_MovePosition.Controls.Add(button5);
+            gb_MovePosition.Controls.Add(button3);
+            gb_MovePosition.Controls.Add(label58);
+            gb_MovePosition.Controls.Add(label57);
+            gb_MovePosition.Controls.Add(label54);
+            gb_MovePosition.Controls.Add(label53);
+            gb_MovePosition.Controls.Add(label50);
+            gb_MovePosition.Controls.Add(label56);
+            gb_MovePosition.Controls.Add(label49);
+            gb_MovePosition.Controls.Add(label52);
+            gb_MovePosition.Controls.Add(label43);
+            gb_MovePosition.Controls.Add(textBox12);
+            gb_MovePosition.Controls.Add(label48);
+            gb_MovePosition.Controls.Add(textBox9);
+            gb_MovePosition.Controls.Add(label44);
+            gb_MovePosition.Controls.Add(label55);
+            gb_MovePosition.Controls.Add(textBox6);
+            gb_MovePosition.Controls.Add(label51);
+            gb_MovePosition.Controls.Add(label45);
+            gb_MovePosition.Controls.Add(textBox11);
+            gb_MovePosition.Controls.Add(label47);
+            gb_MovePosition.Controls.Add(textBox8);
+            gb_MovePosition.Controls.Add(textBox1);
+            gb_MovePosition.Controls.Add(textBox10);
+            gb_MovePosition.Controls.Add(textBox5);
+            gb_MovePosition.Controls.Add(textBox7);
+            gb_MovePosition.Controls.Add(label46);
+            gb_MovePosition.Controls.Add(textBox4);
+            gb_MovePosition.Controls.Add(textBox2);
+            gb_MovePosition.Controls.Add(textBox3);
+            gb_MovePosition.Location = new Point(12, 606);
+            gb_MovePosition.Name = "gb_MovePosition";
+            gb_MovePosition.Size = new Size(364, 254);
+            gb_MovePosition.TabIndex = 43;
+            gb_MovePosition.TabStop = false;
+            gb_MovePosition.Text = "위치 이동";
+            // 
+            // label43
+            // 
+            label43.AutoSize = true;
+            label43.Location = new Point(6, 25);
+            label43.Name = "label43";
+            label43.Size = new Size(69, 15);
+            label43.TabIndex = 43;
+            label43.Text = "1. 디스펜싱";
+            // 
+            // label44
+            // 
+            label44.AutoSize = true;
+            label44.Location = new Point(164, 53);
+            label44.Name = "label44";
+            label44.Size = new Size(14, 15);
+            label44.TabIndex = 40;
+            label44.Text = "Z";
+            // 
+            // label45
+            // 
+            label45.AutoSize = true;
+            label45.Location = new Point(82, 53);
+            label45.Name = "label45";
+            label45.Size = new Size(14, 15);
+            label45.TabIndex = 41;
+            label45.Text = "Y";
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(19, 49);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(60, 23);
+            textBox1.TabIndex = 39;
+            textBox1.Text = "-35632";
+            // 
+            // label46
+            // 
+            label46.AutoSize = true;
+            label46.Location = new Point(3, 53);
+            label46.Name = "label46";
+            label46.Size = new Size(14, 15);
+            label46.TabIndex = 42;
+            label46.Text = "X";
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(97, 49);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(60, 23);
+            textBox2.TabIndex = 38;
+            textBox2.Text = "-40572";
+            // 
+            // textBox3
+            // 
+            textBox3.Location = new Point(180, 49);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(60, 23);
+            textBox3.TabIndex = 37;
+            textBox3.Text = "-56374";
+            // 
+            // button3
+            // 
+            button3.Location = new Point(242, 49);
+            button3.Name = "button3";
+            button3.Size = new Size(57, 23);
+            button3.TabIndex = 44;
+            button3.Text = "이동";
+            button3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            button4.Location = new Point(301, 49);
+            button4.Name = "button4";
+            button4.Size = new Size(57, 23);
+            button4.TabIndex = 44;
+            button4.Text = "저장";
+            button4.UseVisualStyleBackColor = true;
+            // 
+            // textBox4
+            // 
+            textBox4.Location = new Point(180, 109);
+            textBox4.Name = "textBox4";
+            textBox4.Size = new Size(60, 23);
+            textBox4.TabIndex = 37;
+            textBox4.Text = "-56374";
+            // 
+            // textBox5
+            // 
+            textBox5.Location = new Point(97, 109);
+            textBox5.Name = "textBox5";
+            textBox5.Size = new Size(60, 23);
+            textBox5.TabIndex = 38;
+            textBox5.Text = "-40572";
+            // 
+            // label47
+            // 
+            label47.AutoSize = true;
+            label47.Location = new Point(3, 113);
+            label47.Name = "label47";
+            label47.Size = new Size(14, 15);
+            label47.TabIndex = 42;
+            label47.Text = "X";
+            // 
+            // textBox6
+            // 
+            textBox6.Location = new Point(19, 109);
+            textBox6.Name = "textBox6";
+            textBox6.Size = new Size(60, 23);
+            textBox6.TabIndex = 39;
+            textBox6.Text = "-35632";
+            // 
+            // label48
+            // 
+            label48.AutoSize = true;
+            label48.Location = new Point(82, 113);
+            label48.Name = "label48";
+            label48.Size = new Size(14, 15);
+            label48.TabIndex = 41;
+            label48.Text = "Y";
+            // 
+            // label49
+            // 
+            label49.AutoSize = true;
+            label49.Location = new Point(164, 113);
+            label49.Name = "label49";
+            label49.Size = new Size(14, 15);
+            label49.TabIndex = 40;
+            label49.Text = "Z";
+            // 
+            // label50
+            // 
+            label50.AutoSize = true;
+            label50.Location = new Point(6, 85);
+            label50.Name = "label50";
+            label50.Size = new Size(113, 15);
+            label50.TabIndex = 43;
+            label50.Text = "2. 첫 디스펜싱 위치";
+            // 
+            // button5
+            // 
+            button5.Location = new Point(242, 109);
+            button5.Name = "button5";
+            button5.Size = new Size(57, 23);
+            button5.TabIndex = 44;
+            button5.Text = "이동";
+            button5.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            button6.Location = new Point(301, 109);
+            button6.Name = "button6";
+            button6.Size = new Size(57, 23);
+            button6.TabIndex = 44;
+            button6.Text = "저장";
+            button6.UseVisualStyleBackColor = true;
+            // 
+            // textBox7
+            // 
+            textBox7.Location = new Point(180, 169);
+            textBox7.Name = "textBox7";
+            textBox7.Size = new Size(60, 23);
+            textBox7.TabIndex = 37;
+            textBox7.Text = "-56374";
+            // 
+            // textBox8
+            // 
+            textBox8.Location = new Point(97, 169);
+            textBox8.Name = "textBox8";
+            textBox8.Size = new Size(60, 23);
+            textBox8.TabIndex = 38;
+            textBox8.Text = "-40572";
+            // 
+            // label51
+            // 
+            label51.AutoSize = true;
+            label51.Location = new Point(3, 173);
+            label51.Name = "label51";
+            label51.Size = new Size(14, 15);
+            label51.TabIndex = 42;
+            label51.Text = "X";
+            // 
+            // textBox9
+            // 
+            textBox9.Location = new Point(19, 169);
+            textBox9.Name = "textBox9";
+            textBox9.Size = new Size(60, 23);
+            textBox9.TabIndex = 39;
+            textBox9.Text = "-35632";
+            // 
+            // label52
+            // 
+            label52.AutoSize = true;
+            label52.Location = new Point(82, 173);
+            label52.Name = "label52";
+            label52.Size = new Size(14, 15);
+            label52.TabIndex = 41;
+            label52.Text = "Y";
+            // 
+            // label53
+            // 
+            label53.AutoSize = true;
+            label53.Location = new Point(164, 173);
+            label53.Name = "label53";
+            label53.Size = new Size(14, 15);
+            label53.TabIndex = 40;
+            label53.Text = "Z";
+            // 
+            // label54
+            // 
+            label54.AutoSize = true;
+            label54.Location = new Point(6, 145);
+            label54.Name = "label54";
+            label54.Size = new Size(85, 15);
+            label54.TabIndex = 43;
+            label54.Text = "3. 카메라 위치";
+            // 
+            // button7
+            // 
+            button7.Location = new Point(242, 169);
+            button7.Name = "button7";
+            button7.Size = new Size(57, 23);
+            button7.TabIndex = 44;
+            button7.Text = "이동";
+            button7.UseVisualStyleBackColor = true;
+            // 
+            // button8
+            // 
+            button8.Location = new Point(301, 169);
+            button8.Name = "button8";
+            button8.Size = new Size(57, 23);
+            button8.TabIndex = 44;
+            button8.Text = "저장";
+            button8.UseVisualStyleBackColor = true;
+            // 
+            // textBox10
+            // 
+            textBox10.Location = new Point(180, 223);
+            textBox10.Name = "textBox10";
+            textBox10.Size = new Size(60, 23);
+            textBox10.TabIndex = 37;
+            textBox10.Text = "-56374";
+            // 
+            // textBox11
+            // 
+            textBox11.Location = new Point(97, 223);
+            textBox11.Name = "textBox11";
+            textBox11.Size = new Size(60, 23);
+            textBox11.TabIndex = 38;
+            textBox11.Text = "-40572";
+            // 
+            // label55
+            // 
+            label55.AutoSize = true;
+            label55.Location = new Point(3, 227);
+            label55.Name = "label55";
+            label55.Size = new Size(14, 15);
+            label55.TabIndex = 42;
+            label55.Text = "X";
+            // 
+            // textBox12
+            // 
+            textBox12.Location = new Point(19, 223);
+            textBox12.Name = "textBox12";
+            textBox12.Size = new Size(60, 23);
+            textBox12.TabIndex = 39;
+            textBox12.Text = "-35632";
+            // 
+            // label56
+            // 
+            label56.AutoSize = true;
+            label56.Location = new Point(82, 227);
+            label56.Name = "label56";
+            label56.Size = new Size(14, 15);
+            label56.TabIndex = 41;
+            label56.Text = "Y";
+            // 
+            // label57
+            // 
+            label57.AutoSize = true;
+            label57.Location = new Point(164, 227);
+            label57.Name = "label57";
+            label57.Size = new Size(14, 15);
+            label57.TabIndex = 40;
+            label57.Text = "Z";
+            // 
+            // label58
+            // 
+            label58.AutoSize = true;
+            label58.Location = new Point(6, 199);
+            label58.Name = "label58";
+            label58.Size = new Size(73, 15);
+            label58.TabIndex = 43;
+            label58.Text = "4. 몰드 위치";
+            // 
+            // button9
+            // 
+            button9.Location = new Point(242, 223);
+            button9.Name = "button9";
+            button9.Size = new Size(57, 23);
+            button9.TabIndex = 44;
+            button9.Text = "이동";
+            button9.UseVisualStyleBackColor = true;
+            // 
+            // button10
+            // 
+            button10.Location = new Point(301, 223);
+            button10.Name = "button10";
+            button10.Size = new Size(57, 23);
+            button10.TabIndex = 44;
+            button10.Text = "저장";
+            button10.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1064, 901);
+            Controls.Add(btn_Distance_Setting_Auto);
+            Controls.Add(gb_MovePosition);
+            Controls.Add(btn_HomeReturn);
+            Controls.Add(label41);
+            Controls.Add(btn_Distance_Save);
+            Controls.Add(tb_Processing_delay);
+            Controls.Add(btn_Dispensing_Timer_Stop);
+            Controls.Add(btn_Distance_Setting);
             Controls.Add(btn_BFX_Capture);
-            Controls.Add(panel_SaveXYZ);
+            Controls.Add(btn_ImgProcessing);
+            Controls.Add(label40);
             Controls.Add(btn_Dispensing_Ones);
-            Controls.Add(groupBox6);
+            Controls.Add(tb_Dispensing_delay);
             Controls.Add(tabControl1);
+            Controls.Add(btn_Dispencing_Timer);
             Controls.Add(btn_EmergencyStop);
-            Controls.Add(groupBox1);
             Controls.Add(pictureBox1);
             Name = "Main";
             FormClosing += Form1_FormClosing;
             Load += Main_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            groupBox1.ResumeLayout(false);
-            groupBox3.ResumeLayout(false);
-            groupBox3.PerformLayout();
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
             groupBox7.ResumeLayout(false);
             groupBox7.PerformLayout();
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
+            groupBox6.ResumeLayout(false);
+            groupBox6.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
             tabPage3.ResumeLayout(false);
             tabPage3.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
             groupBox8.ResumeLayout(false);
             groupBox8.PerformLayout();
             groupBox9.ResumeLayout(false);
             groupBox9.PerformLayout();
             tabPage4.ResumeLayout(false);
-            groupBox6.ResumeLayout(false);
-            groupBox6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
+            gb_MovePosition.ResumeLayout(false);
+            gb_MovePosition.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btn_Disconnect;
-        private System.Windows.Forms.Button btn_Connect;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox tb_Position_X;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox tb_Position_Z;
-        private System.Windows.Forms.TextBox tb_Position_Y;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button btn_Jog_Z_Minus;
         private System.Windows.Forms.Button btn_Jog_Z_Plus;
@@ -1704,17 +2033,8 @@
         private System.Windows.Forms.TextBox tb_EmptyCount;
         private System.Windows.Forms.TextBox tb_SizeOfArr;
         private System.Windows.Forms.TextBox tb_ExposureTime;
-        private System.Windows.Forms.Button btn_PositionSave;
         private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.Button btn_Expanded;
-        private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.Button btn_Fullscreen;
-        private System.Windows.Forms.Label label36;
-        private System.Windows.Forms.TextBox tb_Expanded;
         private System.Windows.Forms.TextBox tb_Path;
-        private System.Windows.Forms.Panel panel_SaveXYZ;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox tb_SaveName;
         private System.Windows.Forms.Button btn_HomeReturn;
         private System.Windows.Forms.Button btn_ImgProcessing;
         private System.Windows.Forms.Button btn_ExpansionCustom;
@@ -1781,5 +2101,56 @@
         private TextBox tb_Lamp;
         private BindingSource bindingSource1;
         private Button btn_BFX_Capture;
+        private GroupBox groupBox3;
+        private Label label5;
+        private TextBox tb_SaveName;
+        private Label label8;
+        private Label label6;
+        private Label label4;
+        private TextBox tb_Position_Z;
+        private TextBox tb_Position_Y;
+        private TextBox tb_Position_X;
+        private GroupBox groupBox6;
+        private Label label36;
+        private TextBox tb_Expanded;
+        private Button btn_Fullscreen;
+        private Button btn_Expanded;
+        private GroupBox gb_MovePosition;
+        private Button button10;
+        private Button button8;
+        private Button button6;
+        private Button button4;
+        private Button button9;
+        private Button button7;
+        private Button button5;
+        private Button button3;
+        private Label label58;
+        private Label label57;
+        private Label label54;
+        private Label label53;
+        private Label label50;
+        private Label label56;
+        private Label label49;
+        private Label label52;
+        private Label label43;
+        private TextBox textBox12;
+        private Label label48;
+        private TextBox textBox9;
+        private Label label44;
+        private Label label55;
+        private TextBox textBox6;
+        private Label label51;
+        private Label label45;
+        private TextBox textBox11;
+        private Label label47;
+        private TextBox textBox8;
+        private TextBox textBox1;
+        private TextBox textBox10;
+        private TextBox textBox5;
+        private TextBox textBox7;
+        private Label label46;
+        private TextBox textBox4;
+        private TextBox textBox2;
+        private TextBox textBox3;
     }
 }
