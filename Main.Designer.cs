@@ -49,14 +49,6 @@
             btn_Jog_Y_Plus = new Button();
             tb_Distance = new TextBox();
             tb_CustomMove = new TextBox();
-            groupBox7 = new GroupBox();
-            btn_PositionMove = new Button();
-            label17 = new Label();
-            label18 = new Label();
-            label19 = new Label();
-            tb_PositionMove_Z = new TextBox();
-            tb_PositionMove_Y = new TextBox();
-            tb_PositionMove_X = new TextBox();
             btn_EmergencyStop = new Button();
             richTextBox1 = new RichTextBox();
             button1 = new Button();
@@ -64,6 +56,9 @@
             button2 = new Button();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            btn_Lamp_Change = new Button();
+            label42 = new Label();
+            tb_Lamp = new TextBox();
             groupBox6 = new GroupBox();
             label36 = new Label();
             tb_Expanded = new TextBox();
@@ -82,6 +77,14 @@
             tabPage2 = new TabPage();
             btn_ImgSave = new Button();
             tabPage3 = new TabPage();
+            groupBox7 = new GroupBox();
+            btn_PositionMove = new Button();
+            label17 = new Label();
+            label18 = new Label();
+            label19 = new Label();
+            tb_PositionMove_Z = new TextBox();
+            tb_PositionMove_Y = new TextBox();
+            tb_PositionMove_X = new TextBox();
             groupBox3 = new GroupBox();
             label8 = new Label();
             label6 = new Label();
@@ -89,7 +92,6 @@
             tb_Position_Z = new TextBox();
             tb_Position_Y = new TextBox();
             tb_Position_X = new TextBox();
-            btn_Lamp_Change = new Button();
             groupBox8 = new GroupBox();
             label16 = new Label();
             label15 = new Label();
@@ -97,7 +99,6 @@
             tb_Tcd_Now = new TextBox();
             tb_Tca_Now = new TextBox();
             tb_Speed_Now = new TextBox();
-            label42 = new Label();
             groupBox9 = new GroupBox();
             btn_SpeedSetUp = new Button();
             label20 = new Label();
@@ -107,7 +108,6 @@
             tb_Tca_Target = new TextBox();
             tb_Speed_Target = new TextBox();
             label2 = new Label();
-            tb_Lamp = new TextBox();
             tb_MoldSpacing = new TextBox();
             label1 = new Label();
             tb_MoldCount = new TextBox();
@@ -183,13 +183,13 @@
             tb_Dispensing_Z = new TextBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox4.SuspendLayout();
-            groupBox7.SuspendLayout();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox6.SuspendLayout();
             groupBox2.SuspendLayout();
             tabPage2.SuspendLayout();
             tabPage3.SuspendLayout();
+            groupBox7.SuspendLayout();
             groupBox3.SuspendLayout();
             groupBox8.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -438,80 +438,6 @@
             tb_CustomMove.TabIndex = 4;
             tb_CustomMove.Text = "1";
             // 
-            // groupBox7
-            // 
-            groupBox7.Controls.Add(btn_PositionMove);
-            groupBox7.Controls.Add(label17);
-            groupBox7.Controls.Add(label18);
-            groupBox7.Controls.Add(label19);
-            groupBox7.Controls.Add(tb_PositionMove_Z);
-            groupBox7.Controls.Add(tb_PositionMove_Y);
-            groupBox7.Controls.Add(tb_PositionMove_X);
-            groupBox7.Location = new Point(6, 541);
-            groupBox7.Name = "groupBox7";
-            groupBox7.Size = new Size(354, 114);
-            groupBox7.TabIndex = 4;
-            groupBox7.TabStop = false;
-            groupBox7.Text = "위치 이동";
-            // 
-            // btn_PositionMove
-            // 
-            btn_PositionMove.Location = new Point(138, 77);
-            btn_PositionMove.Name = "btn_PositionMove";
-            btn_PositionMove.Size = new Size(85, 30);
-            btn_PositionMove.TabIndex = 2;
-            btn_PositionMove.Text = "이동";
-            btn_PositionMove.UseVisualStyleBackColor = true;
-            btn_PositionMove.Click += btn_PositionMove_Click;
-            // 
-            // label17
-            // 
-            label17.AutoSize = true;
-            label17.Location = new Point(241, 34);
-            label17.Name = "label17";
-            label17.Size = new Size(14, 15);
-            label17.TabIndex = 1;
-            label17.Text = "Z";
-            // 
-            // label18
-            // 
-            label18.AutoSize = true;
-            label18.Location = new Point(127, 34);
-            label18.Name = "label18";
-            label18.Size = new Size(14, 15);
-            label18.TabIndex = 1;
-            label18.Text = "Y";
-            // 
-            // label19
-            // 
-            label19.AutoSize = true;
-            label19.Location = new Point(14, 34);
-            label19.Name = "label19";
-            label19.Size = new Size(14, 15);
-            label19.TabIndex = 1;
-            label19.Text = "X";
-            // 
-            // tb_PositionMove_Z
-            // 
-            tb_PositionMove_Z.Location = new Point(261, 30);
-            tb_PositionMove_Z.Name = "tb_PositionMove_Z";
-            tb_PositionMove_Z.Size = new Size(76, 23);
-            tb_PositionMove_Z.TabIndex = 0;
-            // 
-            // tb_PositionMove_Y
-            // 
-            tb_PositionMove_Y.Location = new Point(147, 30);
-            tb_PositionMove_Y.Name = "tb_PositionMove_Y";
-            tb_PositionMove_Y.Size = new Size(76, 23);
-            tb_PositionMove_Y.TabIndex = 0;
-            // 
-            // tb_PositionMove_X
-            // 
-            tb_PositionMove_X.Location = new Point(34, 30);
-            tb_PositionMove_X.Name = "tb_PositionMove_X";
-            tb_PositionMove_X.Size = new Size(76, 23);
-            tb_PositionMove_X.TabIndex = 0;
-            // 
             // btn_EmergencyStop
             // 
             btn_EmergencyStop.BackColor = Color.Red;
@@ -577,16 +503,44 @@
             // tabPage1
             // 
             tabPage1.BackColor = SystemColors.ControlLight;
+            tabPage1.Controls.Add(btn_Lamp_Change);
+            tabPage1.Controls.Add(label42);
+            tabPage1.Controls.Add(tb_Lamp);
             tabPage1.Controls.Add(groupBox6);
             tabPage1.Controls.Add(groupBox2);
             tabPage1.Controls.Add(groupBox4);
-            tabPage1.Controls.Add(groupBox7);
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
             tabPage1.Size = new Size(451, 730);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "모터";
+            // 
+            // btn_Lamp_Change
+            // 
+            btn_Lamp_Change.Location = new Point(153, 487);
+            btn_Lamp_Change.Name = "btn_Lamp_Change";
+            btn_Lamp_Change.Size = new Size(75, 23);
+            btn_Lamp_Change.TabIndex = 46;
+            btn_Lamp_Change.Text = "변경";
+            btn_Lamp_Change.UseVisualStyleBackColor = true;
+            btn_Lamp_Change.Click += btn_Lamp_Change_Click;
+            // 
+            // label42
+            // 
+            label42.AutoSize = true;
+            label42.Location = new Point(6, 490);
+            label42.Name = "label42";
+            label42.Size = new Size(59, 15);
+            label42.TabIndex = 45;
+            label42.Text = "현재 밝기";
+            // 
+            // tb_Lamp
+            // 
+            tb_Lamp.Location = new Point(71, 487);
+            tb_Lamp.Name = "tb_Lamp";
+            tb_Lamp.Size = new Size(76, 23);
+            tb_Lamp.TabIndex = 44;
             // 
             // groupBox6
             // 
@@ -765,13 +719,11 @@
             // tabPage3
             // 
             tabPage3.BackColor = SystemColors.ControlLight;
+            tabPage3.Controls.Add(groupBox7);
             tabPage3.Controls.Add(groupBox3);
-            tabPage3.Controls.Add(btn_Lamp_Change);
             tabPage3.Controls.Add(groupBox8);
-            tabPage3.Controls.Add(label42);
             tabPage3.Controls.Add(groupBox9);
             tabPage3.Controls.Add(label2);
-            tabPage3.Controls.Add(tb_Lamp);
             tabPage3.Controls.Add(tb_MoldSpacing);
             tabPage3.Controls.Add(label1);
             tabPage3.Controls.Add(tb_MoldCount);
@@ -800,6 +752,79 @@
             tabPage3.TabIndex = 2;
             tabPage3.Text = "세부 설정";
             // 
+            // groupBox7
+            // 
+            groupBox7.Controls.Add(btn_PositionMove);
+            groupBox7.Controls.Add(label17);
+            groupBox7.Controls.Add(label18);
+            groupBox7.Controls.Add(label19);
+            groupBox7.Controls.Add(tb_PositionMove_Z);
+            groupBox7.Controls.Add(tb_PositionMove_Y);
+            groupBox7.Controls.Add(tb_PositionMove_X);
+            groupBox7.Location = new Point(20, 562);
+            groupBox7.Name = "groupBox7";
+            groupBox7.Size = new Size(354, 114);
+            groupBox7.TabIndex = 42;
+            groupBox7.TabStop = false;
+            groupBox7.Text = "위치 이동";
+            // 
+            // btn_PositionMove
+            // 
+            btn_PositionMove.Location = new Point(138, 77);
+            btn_PositionMove.Name = "btn_PositionMove";
+            btn_PositionMove.Size = new Size(85, 30);
+            btn_PositionMove.TabIndex = 2;
+            btn_PositionMove.Text = "이동";
+            btn_PositionMove.UseVisualStyleBackColor = true;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(241, 34);
+            label17.Name = "label17";
+            label17.Size = new Size(14, 15);
+            label17.TabIndex = 1;
+            label17.Text = "Z";
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Location = new Point(127, 34);
+            label18.Name = "label18";
+            label18.Size = new Size(14, 15);
+            label18.TabIndex = 1;
+            label18.Text = "Y";
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Location = new Point(14, 34);
+            label19.Name = "label19";
+            label19.Size = new Size(14, 15);
+            label19.TabIndex = 1;
+            label19.Text = "X";
+            // 
+            // tb_PositionMove_Z
+            // 
+            tb_PositionMove_Z.Location = new Point(261, 30);
+            tb_PositionMove_Z.Name = "tb_PositionMove_Z";
+            tb_PositionMove_Z.Size = new Size(76, 23);
+            tb_PositionMove_Z.TabIndex = 0;
+            // 
+            // tb_PositionMove_Y
+            // 
+            tb_PositionMove_Y.Location = new Point(147, 30);
+            tb_PositionMove_Y.Name = "tb_PositionMove_Y";
+            tb_PositionMove_Y.Size = new Size(76, 23);
+            tb_PositionMove_Y.TabIndex = 0;
+            // 
+            // tb_PositionMove_X
+            // 
+            tb_PositionMove_X.Location = new Point(34, 30);
+            tb_PositionMove_X.Name = "tb_PositionMove_X";
+            tb_PositionMove_X.Size = new Size(76, 23);
+            tb_PositionMove_X.TabIndex = 0;
+            // 
             // groupBox3
             // 
             groupBox3.Controls.Add(label8);
@@ -808,7 +833,7 @@
             groupBox3.Controls.Add(tb_Position_Z);
             groupBox3.Controls.Add(tb_Position_Y);
             groupBox3.Controls.Add(tb_Position_X);
-            groupBox3.Location = new Point(18, 525);
+            groupBox3.Location = new Point(20, 456);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(268, 100);
             groupBox3.TabIndex = 41;
@@ -865,16 +890,6 @@
             tb_Position_X.ReadOnly = true;
             tb_Position_X.Size = new Size(60, 23);
             tb_Position_X.TabIndex = 0;
-            // 
-            // btn_Lamp_Change
-            // 
-            btn_Lamp_Change.Location = new Point(167, 464);
-            btn_Lamp_Change.Name = "btn_Lamp_Change";
-            btn_Lamp_Change.Size = new Size(75, 23);
-            btn_Lamp_Change.TabIndex = 40;
-            btn_Lamp_Change.Text = "변경";
-            btn_Lamp_Change.UseVisualStyleBackColor = true;
-            btn_Lamp_Change.Click += btn_Lamp_Change_Click;
             // 
             // groupBox8
             // 
@@ -941,15 +956,6 @@
             tb_Speed_Now.ReadOnly = true;
             tb_Speed_Now.Size = new Size(76, 23);
             tb_Speed_Now.TabIndex = 3;
-            // 
-            // label42
-            // 
-            label42.AutoSize = true;
-            label42.Location = new Point(20, 467);
-            label42.Name = "label42";
-            label42.Size = new Size(59, 15);
-            label42.TabIndex = 4;
-            label42.Text = "현재 밝기";
             // 
             // groupBox9
             // 
@@ -1033,13 +1039,6 @@
             label2.Size = new Size(71, 15);
             label2.TabIndex = 29;
             label2.Text = "몰드간 거리";
-            // 
-            // tb_Lamp
-            // 
-            tb_Lamp.Location = new Point(85, 464);
-            tb_Lamp.Name = "tb_Lamp";
-            tb_Lamp.Size = new Size(76, 23);
-            tb_Lamp.TabIndex = 3;
             // 
             // tb_MoldSpacing
             // 
@@ -1763,10 +1762,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
-            groupBox7.ResumeLayout(false);
-            groupBox7.PerformLayout();
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
+            tabPage1.PerformLayout();
             groupBox6.ResumeLayout(false);
             groupBox6.PerformLayout();
             groupBox2.ResumeLayout(false);
@@ -1775,6 +1773,8 @@
             tabPage2.PerformLayout();
             tabPage3.ResumeLayout(false);
             tabPage3.PerformLayout();
+            groupBox7.ResumeLayout(false);
+            groupBox7.PerformLayout();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
             groupBox8.ResumeLayout(false);
@@ -1797,14 +1797,6 @@
         private System.Windows.Forms.Button btn_Jog_Z_Plus;
         private System.Windows.Forms.Button btn_Jog_Y_Minus;
         private System.Windows.Forms.Button btn_Jog_Y_Plus;
-        private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox tb_PositionMove_Z;
-        private System.Windows.Forms.TextBox tb_PositionMove_Y;
-        private System.Windows.Forms.TextBox tb_PositionMove_X;
-        private System.Windows.Forms.Button btn_PositionMove;
         private System.Windows.Forms.Button btn_EmergencyStop;
         public System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button btn_Jog_X_Minus;
@@ -1888,9 +1880,6 @@
         private Label label41;
         private TextBox tb_Processing_delay;
         private Button btn_Distance_Setting_Auto;
-        private Button btn_Lamp_Change;
-        private Label label42;
-        private TextBox tb_Lamp;
         private BindingSource bindingSource1;
         private Button btn_BFX_Capture;
         private GroupBox groupBox3;
@@ -1943,5 +1932,16 @@
         private TextBox tb_Dispensing_FirstY;
         private TextBox tb_Dispensing_FirstZ;
         private Label label23;
+        private Button btn_Lamp_Change;
+        private Label label42;
+        private TextBox tb_Lamp;
+        private GroupBox groupBox7;
+        private Button btn_PositionMove;
+        private Label label17;
+        private Label label18;
+        private Label label19;
+        private TextBox tb_PositionMove_Z;
+        private TextBox tb_PositionMove_Y;
+        private TextBox tb_PositionMove_X;
     }
 }

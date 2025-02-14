@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using Grpc.Core;
 using log4net;
 using log4net.Config;
 
@@ -58,6 +59,11 @@ namespace MotorControl
             }
 
             LogToUI($"[ERROR] {message}");
+        }
+
+        public static void LogDebug(string message)
+        {
+            log.Debug(message);  // log4net 로그 기록
         }
 
         // UI에 로그 출력 (richTextBox1)
