@@ -25,7 +25,7 @@ namespace MotorControl
             if (load_lib_flg == false)
             {
                 Logger.Log("Api Load fail");
-                Debug.WriteLine("Api Load fail.\n");
+                Logger.Log("Api Load fail.\n");
                 return;
             }
             axis1 = new Axis1();
@@ -49,7 +49,7 @@ namespace MotorControl
                 int ans = sscGetDriveFinStatus(board_id, channel, i + 1, SSC_FIN_TYPE_SMZ, out finStatus[i]);
                 if (ans != SSC_OK)
                 {
-                    Debug.WriteLine($"sscGetDriveFinStatus failed for axis {i + 1}. sscGetLastError=0x{sscGetLastError():X}");
+                    Logger.Log($"sscGetDriveFinStatus failed for axis {i + 1}. sscGetLastError=0x{sscGetLastError():X}");
                     finStatus[i] = -1;
                 }
             }
@@ -61,12 +61,11 @@ namespace MotorControl
             int ans = sscOpen(board_id);
             if (ans != SSC_OK)
             {
-                Debug.WriteLine($"sscOpen failure. sscGetLastError=0x{sscGetLastError():X}");
+                Logger.Log($"sscOpen failure. sscGetLastError=0x{sscGetLastError():X}");
             }
             else
             {
                 Logger.Log("sscOpen success");
-                Debug.WriteLine("sscOpen success");
             }
         }
         public void Close()
@@ -74,12 +73,11 @@ namespace MotorControl
             int ans = sscClose(board_id);
             if (ans != SSC_OK)
             {
-                Debug.WriteLine($"sscClose failure. sscGetLastError=0x{sscGetLastError():X}");
+                Logger.Log($"sscClose failure. sscGetLastError=0x{sscGetLastError():X}");
             }
             else
             {
                 Logger.Log("sscClose success");
-                Debug.WriteLine("sscClose success");
             }
         }
         public void RebootAndStart()
@@ -87,28 +85,28 @@ namespace MotorControl
             int ans = sscReboot(board_id, channel, SSC_DEFAULT_TIMEOUT);
             if (ans != SSC_OK)
             {
-                Debug.WriteLine($"sscReboot failure. sscGetLastError=0x{sscGetLastError():X}");
+                Logger.Log($"sscReboot failure. sscGetLastError=0x{sscGetLastError():X}");
                 return;
             }
 
             ans = sscResetAllParameter(board_id, channel, SSC_DEFAULT_TIMEOUT);
             if (ans != SSC_OK)
             {
-                Debug.WriteLine($"sscResetAllParameter failure. sscGetLastError=0x{sscGetLastError():X}");
+                Logger.Log($"sscResetAllParameter failure. sscGetLastError=0x{sscGetLastError():X}");
                 return;
             }
 
             ans = sscLoadAllParameterFromFlashROM(board_id, channel, SSC_DEFAULT_TIMEOUT);
             if (ans != SSC_OK)
             {
-                Debug.WriteLine($"sscLoadAllParameterFromFlashROM failure. sscGetLastError=0x{sscGetLastError():X}");
+                Logger.Log($"sscLoadAllParameterFromFlashROM failure. sscGetLastError=0x{sscGetLastError():X}");
                 return;
             }
 
             ans = sscSystemStart(board_id, channel, SSC_DEFAULT_TIMEOUT);
             if (ans != SSC_OK)
             {
-                Debug.WriteLine($"sscSystemStart failure. sscGetLastError=0x{sscGetLastError():X}");
+                Logger.Log($"sscSystemStart failure. sscGetLastError=0x{sscGetLastError():X}");
                 return;
             }
             Logger.Log("RebootAndStart success");
@@ -237,12 +235,11 @@ namespace MotorControl
                 ans = sscDriveStop(board_id, channel, i + 1, 0);
                 if (ans != SSC_OK)
                 {
-                    Debug.WriteLine($"sscDriveStop failure. sscGetLastError=0x{sscGetLastError():X}");
+                    Logger.Log($"sscDriveStop failure. sscGetLastError=0x{sscGetLastError():X}");
                 }
                 else
                 {
                     Logger.Log($"axis{i + 1} sscDriveStop success");
-                    Debug.WriteLine($"axis{i + 1} sscDriveStop success");
                 }
             }
         }
@@ -259,7 +256,7 @@ namespace MotorControl
             ans = sscGetCurrentCmdPositionFast(board_id, channel, 3, out currentPosition);
             if (ans != SSC_OK)
             {
-                Debug.WriteLine($"sscGetCurrentCmdPositionFast failed for Z-axis. sscGetLastError=0x{sscGetLastError():X}\n");
+                Logger.Log($"sscGetCurrentCmdPositionFast failed for Z-axis. sscGetLastError=0x{sscGetLastError():X}\n");
                 return;
             }
             moveDistance = initialZ - currentPosition;
@@ -270,7 +267,7 @@ namespace MotorControl
             ans = sscGetCurrentCmdPositionFast(board_id, channel, 2, out currentPosition);
             if (ans != SSC_OK)
             {
-                Debug.WriteLine($"sscGetCurrentCmdPositionFast failed for Y-axis. sscGetLastError=0x{sscGetLastError():X}\n");
+                Logger.Log($"sscGetCurrentCmdPositionFast failed for Y-axis. sscGetLastError=0x{sscGetLastError():X}\n");
                 return;
             }
             moveDistance = y - currentPosition;
@@ -281,7 +278,7 @@ namespace MotorControl
             ans = sscGetCurrentCmdPositionFast(board_id, channel, 1, out currentPosition);
             if (ans != SSC_OK)
             {
-                Debug.WriteLine($"sscGetCurrentCmdPositionFast failed for X-axis. sscGetLastError=0x{sscGetLastError():X}\n");
+                Logger.Log($"sscGetCurrentCmdPositionFast failed for X-axis. sscGetLastError=0x{sscGetLastError():X}\n");
                 return;
             }
             moveDistance = x - currentPosition;
@@ -292,7 +289,7 @@ namespace MotorControl
             ans = sscGetCurrentCmdPositionFast(board_id, channel, 3, out currentPosition);
             if (ans != SSC_OK)
             {
-                Debug.WriteLine($"sscGetCurrentCmdPositionFast failed for Z-axis. sscGetLastError=0x{sscGetLastError():X}\n");
+                Logger.Log($"sscGetCurrentCmdPositionFast failed for Z-axis. sscGetLastError=0x{sscGetLastError():X}\n");
                 return;
             }
             moveDistance = z - currentPosition;
@@ -312,19 +309,19 @@ namespace MotorControl
             ans = sscGetCurrentCmdPositionFast(board_id, channel, 1, out currentX);
             if (ans != SSC_OK)
             {
-                Debug.WriteLine($"sscGetCurrentCmdPositionFast failed for X-axis. sscGetLastError=0x{sscGetLastError():X}\n");
+                Logger.Log($"sscGetCurrentCmdPositionFast failed for X-axis. sscGetLastError=0x{sscGetLastError():X}\n");
                 return;
             }
             ans = sscGetCurrentCmdPositionFast(board_id, channel, 2, out currentY);
             if (ans != SSC_OK)
             {
-                Debug.WriteLine($"sscGetCurrentCmdPositionFast failed for Y-axis. sscGetLastError=0x{sscGetLastError():X}\n");
+                Logger.Log($"sscGetCurrentCmdPositionFast failed for Y-axis. sscGetLastError=0x{sscGetLastError():X}\n");
                 return;
             }
             ans = sscGetCurrentCmdPositionFast(board_id, channel, 3, out currentZ);
             if (ans != SSC_OK)
             {
-                Debug.WriteLine($"sscGetCurrentCmdPositionFast failed for Z-axis. sscGetLastError=0x{sscGetLastError():X}\n");
+                Logger.Log($"sscGetCurrentCmdPositionFast failed for Z-axis. sscGetLastError=0x{sscGetLastError():X}\n");
                 return;
             }
 
@@ -369,18 +366,18 @@ namespace MotorControl
 
                 if (ans != SSC_OK)
                 {
-                    Debug.WriteLine($"sscGetDriveFinStatus failed for axis {axisNumber}. sscGetLastError=0x{sscGetLastError():X}\n");
+                    Logger.Log($"sscGetDriveFinStatus failed for axis {axisNumber}. sscGetLastError=0x{sscGetLastError():X}\n");
                     return;
                 }
 
                 if (finStatus == SSC_FIN_STS_STP) // 이동 완료 상태
                 {
-                    Debug.WriteLine($"Axis {axisNumber}: Drive finished successfully.\n");
+                    Logger.Log($"Axis {axisNumber}: Drive finished successfully.\n");
                     break;
                 }
                 else if (finStatus == SSC_FIN_STS_ALM_STP || finStatus == SSC_FIN_STS_ALM_MOV) // 알람 상태
                 {
-                    Debug.WriteLine($"Axis {axisNumber}: Alarm detected. Status={finStatus}\n");
+                    Logger.Log($"Axis {axisNumber}: Alarm detected. Status={finStatus}\n");
                     switch (axisNumber)
                     {
                         case 1:
@@ -413,7 +410,7 @@ namespace MotorControl
 
                 if (ans != SSC_OK)
                 {
-                    Debug.WriteLine($"HomeReturn failure for axis {axisNumber}. sscGetLastError=0x{sscGetLastError():X}\n");
+                    Logger.Log($"HomeReturn failure for axis {axisNumber}. sscGetLastError=0x{sscGetLastError():X}\n");
                     if (axisNumber == 3)
                     {
                         ans = sscResetAlarm(board_id, channel, axisNumber, SSC_ALARM_OPERATION);
@@ -426,7 +423,7 @@ namespace MotorControl
                 }
                 else
                 {
-                    Debug.WriteLine($"HomeReturn started successfully for axis {axisNumber}\n");
+                    Logger.Log($"HomeReturn started successfully for axis {axisNumber}\n");
                 }
 
                 // 상태 확인: n초 동안 sscGetDriveFinStatus로 상태 확인
@@ -441,20 +438,20 @@ namespace MotorControl
 
                     if (ans != SSC_OK)
                     {
-                        Debug.WriteLine($"sscGetDriveFinStatus failed for axis {axisNumber}. sscGetLastError=0x{sscGetLastError():X}\n");
+                        Logger.Log($"sscGetDriveFinStatus failed for axis {axisNumber}. sscGetLastError=0x{sscGetLastError():X}\n");
                         return; // 에러 발생 시 복귀 종료
                     }
 
                     // 운전 완료 상태 확인
                     if (fin_status == SSC_FIN_STS_STP) // 운전 완료 상태
                     {
-                        Debug.WriteLine($"Axis {axisNumber}: Drive finished successfully.\n");
+                        Logger.Log($"Axis {axisNumber}: Drive finished successfully.\n");
                         isCompleted = true;
                         break;
                     }
                     else if (fin_status == SSC_FIN_STS_ALM_STP || fin_status == SSC_FIN_STS_ALM_MOV) // 알람 상태
                     {
-                        Debug.WriteLine($"Axis {axisNumber}: Alarm detected. Status={fin_status}\n");
+                        Logger.Log($"Axis {axisNumber}: Alarm detected. Status={fin_status}\n");
                         switch (axisNumber)
                         {
                             case 1:
@@ -478,13 +475,12 @@ namespace MotorControl
 
                 if (!isCompleted)
                 {
-                    Debug.WriteLine($"Timeout while waiting for axis {axisNumber} to complete drive.\n");
+                    Logger.Log($"Timeout while waiting for axis {axisNumber} to complete drive.\n");
                     return; // 타임아웃 시 복귀 종료
                 }
             }
 
             Logger.Log("HomeReturn end");
-            Debug.WriteLine("Home return process completed for all axes.\n");
         }
 
     }

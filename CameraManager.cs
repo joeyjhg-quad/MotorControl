@@ -74,7 +74,7 @@ namespace MotorControl
                                 }
                                 else
                                 {
-                                    Debug.WriteLine($"Error: {grabResult.ErrorCode} {grabResult.ErrorDescription}");
+                                    Logger.Log($"Error: {grabResult.ErrorCode} {grabResult.ErrorDescription}");
                                 }
                             }
 
@@ -93,7 +93,7 @@ namespace MotorControl
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"Exception: {ex.Message}");
+                    Logger.Log($"Exception: {ex.Message}");
                 }
             }, token);
         }

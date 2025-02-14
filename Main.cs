@@ -376,7 +376,7 @@ namespace MotorControl
                 catch (Exception ex)
                 {
                     // 에러 메시지 로그 출력 또는 UI 알림
-                    Debug.WriteLine($"Error: {ex.Message}");
+                    Logger.Log($"Error: {ex.Message}");
                 }
             });
         }
@@ -396,7 +396,7 @@ namespace MotorControl
                 catch (Exception ex)
                 {
                     // 에러 메시지 로그 출력 또는 UI 알림
-                    Debug.WriteLine($"Error: {ex.Message}");
+                    Logger.Log($"Error: {ex.Message}");
                 }
             });
         }
@@ -896,7 +896,7 @@ namespace MotorControl
                     catch (Exception ex)
                     {
                         // 에러 메시지 로그 출력 또는 UI 알림
-                        Debug.WriteLine($"Error: {ex.Message}");
+                        Logger.Log($"Error: {ex.Message}");
                     }
                 });
             }
@@ -1056,10 +1056,16 @@ namespace MotorControl
                 //bfxClient.setNumberOfDispenses(new SetNumberOfDispensesRequest { Channel = 1, NumberOfDispenses = N });
                 //playing = await bfxClient.executeDispenseCommandAndWaitAsync(new DispenseAndWaitCommandRequest());
                 dispenserCommandResponse = bfxClient.executeDispenserCommand(new DispenserCommandRequest { Name = "dispense", Cmd = "i" });
+                if (dpTimer.Enabled)
+                {
+                    dpTimer.Stop();
+                    btn_Dispensing_Timer_Stop.Enabled = false;
+                }
+
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.ToString());
+                Logger.Log(ex.ToString());
             }
 
         }
@@ -1100,7 +1106,7 @@ namespace MotorControl
                 catch (Exception ex)
                 {
                     // 에러 메시지 로그 출력 또는 UI 알림
-                    Debug.WriteLine($"Error: {ex.Message}");
+                    Logger.Log($"Error: {ex.Message}");
                 }
             });
             btn_Distance_OK.Enabled = true;
@@ -1162,7 +1168,7 @@ namespace MotorControl
                 catch (Exception ex)
                 {
                     // 에러 메시지 로그 출력 또는 UI 알림
-                    Debug.WriteLine($"Error: {ex.Message}");
+                    Logger.Log($"Error: {ex.Message}");
                 }
             });
         }
