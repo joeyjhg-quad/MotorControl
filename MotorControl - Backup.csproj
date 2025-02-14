@@ -22,11 +22,12 @@
     <PackageReference Include="System.IO.Ports" Version="9.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
+<ItemGroup>
     <Reference Include="Basler.Pylon">
-      <HintPath>..\..\MotorControl_WinForm\MotorControl_WinForm\bin\x64\Debug\Basler.Pylon.dll</HintPath>
+        <HintPath>libs\Basler.Pylon.dll</HintPath>
     </Reference>
-  </ItemGroup>
+</ItemGroup>
+
 <ItemGroup>
     <Protobuf Include="Protos\bfxclient-app-service.proto" GrpcServices="Client" />
     <Protobuf Include="Protos\bfxclient-common.proto" GrpcServices="Client" />
@@ -45,10 +46,6 @@
     <None Update="OpenCvSharpExtern.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="libs\" />
   </ItemGroup>
 
 </Project>
