@@ -1237,22 +1237,44 @@ namespace MotorControl
                 btn_Dispensing_Timer_Stop.Enabled = true;
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                Logger.Log(ex.Message);
+            }
 
         }
 
         private void dpTimer_Tick(object sender, EventArgs e)
         {
-            if (BFXConnect)
+            try
             {
-                dispenserCommandResponse = bfxClient.executeDispenserCommand(new DispenserCommandRequest { Name = "dispense", Cmd = "i" });
+                if (BFXConnect)
+                {
+                    dispenserCommandResponse = bfxClient.executeDispenserCommand(new DispenserCommandRequest { Name = "dispense", Cmd = "i" });
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.Log(ex.Message);
+            }
+
         }
 
         private void btn_Dispensing_Timer_Stop_Click(object sender, EventArgs e)
         {
-            dpTimer.Stop();
-            btn_Dispensing_Timer_Stop.Enabled = false;
+            try
+            {
+                if (dpTimer.Enabled)
+                {
+                    Logger.Log("dpTimer.Stop");
+                    dpTimer.Stop();
+                    btn_Dispensing_Timer_Stop.Enabled = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex.Message);
+            }
         }
 
         private void btn_Lamp_Change_Click(object sender, EventArgs e)
