@@ -47,7 +47,7 @@ namespace MotorControl
             this.Location = new System.Drawing.Point(0, 0); // 화면의 (0, 0) 위치로 설정
 
             SetAllValues(textFileManager.GetAllValues());
-            UpdatePanel();
+            //UpdatePanel();
             motorControlManager.Open();
             motorControlManager.RebootAndStart();
             motorControlManager.ServoOn(1);
@@ -61,7 +61,7 @@ namespace MotorControl
             PntData.s_curve = 100;                          /* 100% */
             motorControlManager.SetPoint(PntData);
             Update_Speed();
-            //HomeReturn();
+            HomeReturn();
 
             positionUpdateTimer = new System.Windows.Forms.Timer();
             positionUpdateTimer.Interval = 50; // 50ms마다 위치 갱신
@@ -194,9 +194,15 @@ namespace MotorControl
             Constants.Dispensing_X = Convert.ToInt32(values[ColumnIndex.DISPENSING_X]);
             Constants.Dispensing_Y = Convert.ToInt32(values[ColumnIndex.DISPENSING_Y]);
             Constants.Dispensing_Z = Convert.ToInt32(values[ColumnIndex.DISPENSING_Z]);
+            Constants.Dispensing_First_X = Convert.ToInt32(values[ColumnIndex.DISPENSING_FIRST_X]);
+            Constants.Dispensing_First_Y = Convert.ToInt32(values[ColumnIndex.DISPENSING_FIRST_Y]);
+            Constants.Dispensing_First_Z = Convert.ToInt32(values[ColumnIndex.DISPENSING_FIRST_Z]);
             Constants.Dispensing_Cam_X = Convert.ToInt32(values[ColumnIndex.DISPENSING_CAM_X]);
             Constants.Dispensing_Cam_Y = Convert.ToInt32(values[ColumnIndex.DISPENSING_CAM_Y]);
             Constants.Dispensing_Cam_Z = Convert.ToInt32(values[ColumnIndex.DISPENSING_CAM_Z]);
+            Constants.Mold_X = Convert.ToInt32(values[ColumnIndex.MOLD_X]);
+            Constants.Mold_Y = Convert.ToInt32(values[ColumnIndex.MOLD_Y]);
+            Constants.Mold_Z = Convert.ToInt32(values[ColumnIndex.MOLD_Z]);
 
             Constants.Path = values[ColumnIndex.PATH];
 
@@ -212,14 +218,21 @@ namespace MotorControl
             tb_Dispensing_X.Text = Constants.Dispensing_X.ToString();
             tb_Dispensing_Y.Text = Constants.Dispensing_Y.ToString();
             tb_Dispensing_Z.Text = Constants.Dispensing_Z.ToString();
+            tb_Dispensing_FirstX.Text = Constants.Dispensing_First_X.ToString();
+            tb_Dispensing_FirstY.Text = Constants.Dispensing_First_Y.ToString();
+            tb_Dispensing_FirstZ.Text = Constants.Dispensing_First_Z.ToString();
             tb_Dispensing_Cam_X.Text = Constants.Dispensing_Cam_X.ToString();
             tb_Dispensing_Cam_Y.Text = Constants.Dispensing_Cam_Y.ToString();
             tb_Dispensing_Cam_Z.Text = Constants.Dispensing_Cam_Z.ToString();
+            tb_Mold_X.Text = Constants.Mold_X.ToString();
+            tb_Mold_Y.Text = Constants.Mold_Y.ToString();
+            tb_Mold_Z.Text = Constants.Mold_Z.ToString();
+
             tb_Path.Text = Constants.Path.ToString();
 
-            tb_Distance_X.Text = (int.Parse(tb_Dispensing_X.Text) - int.Parse(tb_Dispensing_Cam_X.Text)).ToString();
-            tb_Distance_Y.Text = (int.Parse(tb_Dispensing_Y.Text) - int.Parse(tb_Dispensing_Cam_Y.Text)).ToString();
-            tb_Distance_Z.Text = (int.Parse(tb_Dispensing_Z.Text) - int.Parse(tb_Dispensing_Cam_Z.Text)).ToString();
+            tb_Distance_X.Text = (int.Parse(tb_Dispensing_FirstX.Text) - int.Parse(tb_Dispensing_Cam_X.Text)).ToString();
+            tb_Distance_Y.Text = (int.Parse(tb_Dispensing_FirstY.Text) - int.Parse(tb_Dispensing_Cam_Y.Text)).ToString();
+            tb_Distance_Z.Text = (int.Parse(tb_Dispensing_FirstZ.Text) - int.Parse(tb_Dispensing_Cam_Z.Text)).ToString();
         }
 
 
@@ -653,116 +666,208 @@ namespace MotorControl
             }
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        //private void button7_Click(object sender, EventArgs e)
+        //{
+        //    // 텍스트박스 값 읽기
+        //    string name = tb_SaveName.Text;
+        //    string P_X = tb_Position_X.Text;
+        //    string P_Y = tb_Position_Y.Text;
+        //    string P_Z = tb_Position_Z.Text;
+
+        //    // 값이 비어있는지 확인
+        //    if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(P_X) || string.IsNullOrEmpty(P_Y) || string.IsNullOrEmpty(P_Z))
+        //    {
+        //        MessageBox.Show("모든 입력 필드를 채워주세요.", "입력 오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        return; // 값이 비어있다면 함수 종료
+        //    }
+
+        //    // 값이 비어있지 않으면 배열에 저장
+        //    string[] val = new string[4];
+        //    val[0] = name;
+        //    val[1] = P_X;
+        //    val[2] = P_Y;
+        //    val[3] = P_Z;
+
+        //    // SetValue 함수 호출
+        //    textFileManager.SetValue(ColumnIndex.SAVEXYZ, val);
+
+        //    //UpdatePanel();
+        //    tb_SaveName.Text = "";
+        //    //TextBox textBox = new TextBox();
+        //    //textBox.Location = new System.Drawing.Point(100, currentY);
+
+        //    //Button button = new Button();
+        //    //button.Text = "버튼 " + currentY;
+        //    //button.Location = new System.Drawing.Point(250, currentY);
+
+        //}
+        //private void UpdatePanel()
+        //{
+        //    // 기존 컨트롤 초기화
+        //    panel_SaveXYZ.Controls.Clear();
+
+        //    // GetValue_XYZ()로 값을 받음
+        //    string[][] xyzValues = textFileManager.GetValue_XYZ();
+
+        //    if (xyzValues == null)
+        //    {
+        //        return; // 값이 없다면 아무 것도 추가하지 않음
+        //    }
+
+        //    // 각 항목에 대해 라벨과 버튼 추가
+        //    int yOffset = 10; // 시작 위치
+
+        //    for (int i = 0; i < xyzValues.Length; i++)
+        //    {
+        //        // XYZ 값
+        //        string name = xyzValues[i][0];
+        //        string pX = xyzValues[i][1];
+        //        string pY = xyzValues[i][2];
+        //        string pZ = xyzValues[i][3];
+
+        //        // 라벨 1: Name
+        //        Label lblName = new Label();
+        //        lblName.Text = name;
+        //        lblName.Size = new System.Drawing.Size(70, 20); // 너비 70, 높이 20
+        //        lblName.Location = new System.Drawing.Point(10, yOffset);
+        //        panel_SaveXYZ.Controls.Add(lblName);
+
+        //        // 라벨 2: X
+        //        Label lblX = new Label();
+        //        lblX.Text = pX;
+        //        lblX.AutoSize = true;
+        //        lblX.Size = new System.Drawing.Size(30, 20); // 너비 50, 높이 20
+        //        lblX.Location = new System.Drawing.Point(80, yOffset);
+        //        panel_SaveXYZ.Controls.Add(lblX);
+
+        //        // 라벨 3: Y
+        //        Label lblY = new Label();
+        //        lblY.Text = pY;
+        //        lblY.AutoSize = true;
+        //        lblY.Size = new System.Drawing.Size(30, 20);
+        //        lblY.Location = new System.Drawing.Point(125, yOffset);
+        //        panel_SaveXYZ.Controls.Add(lblY);
+
+        //        // 라벨 4: Z
+        //        Label lblZ = new Label();
+        //        lblZ.Text = pZ;
+        //        lblZ.AutoSize = true;
+        //        lblZ.Size = new System.Drawing.Size(30, 20);
+        //        lblZ.Location = new System.Drawing.Point(170, yOffset);
+        //        panel_SaveXYZ.Controls.Add(lblZ);
+
+        //        // 이동 버튼
+        //        System.Windows.Forms.Button btnMove = new System.Windows.Forms.Button();
+        //        btnMove.Text = "이동";
+        //        btnMove.Size = new System.Drawing.Size(40, 20);
+        //        btnMove.Tag = new string[] { pX, pY, pZ }; // X, Y, Z 값을 Tag에 저장
+        //        btnMove.Location = new System.Drawing.Point(210, yOffset - 5);
+        //        btnMove.Click += SequenceMove_Click; // 이벤트 핸들러 연결
+        //        panel_SaveXYZ.Controls.Add(btnMove);
+
+        //        // 삭제 버튼
+        //        System.Windows.Forms.Button btnDelete = new System.Windows.Forms.Button();
+        //        btnDelete.Text = "삭제";
+        //        btnDelete.Size = new System.Drawing.Size(40, 20);
+        //        btnDelete.Tag = i; // i(인덱스)를 Tag에 저장
+        //        btnDelete.Location = new System.Drawing.Point(260, yOffset - 5);
+        //        btnDelete.Click += DeleteXYZ_Click; // 이벤트 핸들러 연결
+        //        panel_SaveXYZ.Controls.Add(btnDelete);
+
+        //        // Y축 위치 업데이트 (다음 항목을 아래로 배치)
+        //        yOffset += 30; // 각 항목마다 30px씩 아래로 내려감
+        //    }
+
+        //}
+        private void btn_Position_Move_Click(object sender, EventArgs e)
         {
-            // 텍스트박스 값 읽기
-            string name = tb_SaveName.Text;
-            string P_X = tb_Position_X.Text;
-            string P_Y = tb_Position_Y.Text;
-            string P_Z = tb_Position_Z.Text;
-
-            // 값이 비어있는지 확인
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(P_X) || string.IsNullOrEmpty(P_Y) || string.IsNullOrEmpty(P_Z))
+            if (threadManager.IsWorkerRunning())
             {
-                MessageBox.Show("모든 입력 필드를 채워주세요.", "입력 오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return; // 값이 비어있다면 함수 종료
+                MessageBox.Show("작업 중");
+                return;
             }
+            if (sender is System.Windows.Forms.Button button && button.Tag is string tagValue)
+            {
+                int num = int.Parse(tagValue);
+                int dx, dy, dz;
+                switch (num)
+                {
+                    case 0:
+                        dx = int.Parse(tb_Dispensing_X.Text);
+                        dy = int.Parse(tb_Dispensing_Y.Text);
+                        dz = int.Parse(tb_Dispensing_Z.Text);
+                        break;
+                    case 1:
+                        dx = int.Parse(tb_Dispensing_FirstX.Text);
+                        dy = int.Parse(tb_Dispensing_FirstY.Text);
+                        dz = int.Parse(tb_Dispensing_FirstZ.Text);
+                        break;
+                    case 2:
+                        dx = int.Parse(tb_Dispensing_Cam_X.Text);
+                        dy = int.Parse(tb_Dispensing_Cam_Y.Text);
+                        dz = int.Parse(tb_Dispensing_Cam_Z.Text);
+                        break;
+                    case 3:
+                        dx = int.Parse(tb_Mold_X.Text);
+                        dy = int.Parse(tb_Mold_Y.Text);
+                        dz = int.Parse(tb_Mold_Z.Text);
+                        break;
+                    default:
+                        return;
+                }
+                threadManager.AddWorkerTask((token) => motorControlManager.Sequence(dx, dy, dz));
 
-            // 값이 비어있지 않으면 배열에 저장
-            string[] val = new string[4];
-            val[0] = name;
-            val[1] = P_X;
-            val[2] = P_Y;
-            val[3] = P_Z;
-
-            // SetValue 함수 호출
-            textFileManager.SetValue(ColumnIndex.SAVEXYZ, val);
-
-            UpdatePanel();
-            tb_SaveName.Text = "";
-            //TextBox textBox = new TextBox();
-            //textBox.Location = new System.Drawing.Point(100, currentY);
-
-            //Button button = new Button();
-            //button.Text = "버튼 " + currentY;
-            //button.Location = new System.Drawing.Point(250, currentY);
+            }
 
         }
-        private void UpdatePanel()
+        private void btn_Position_Save_Click(object sender, EventArgs e)
         {
-            // 기존 컨트롤 초기화
-            panel_SaveXYZ.Controls.Clear();
-
-            // GetValue_XYZ()로 값을 받음
-            string[][] xyzValues = textFileManager.GetValue_XYZ();
-
-            if (xyzValues == null)
+            if (sender is System.Windows.Forms.Button button && button.Tag is string tagValue)
             {
-                return; // 값이 없다면 아무 것도 추가하지 않음
-            }
+                int num = int.Parse(tagValue);
+                string dx, dy, dz;
+                dx = tb_Position_X.Text;
+                dy = tb_Position_Y.Text;
+                dz = tb_Position_Z.Text;
+                switch (num)
+                {
+                    case 0:
+                        textFileManager.SetValue(ColumnIndex.DISPENSING_X, dx);
+                        textFileManager.SetValue(ColumnIndex.DISPENSING_Y, dy);
+                        textFileManager.SetValue(ColumnIndex.DISPENSING_Z, dz);
+                        tb_Dispensing_X.Text = dx;
+                        tb_Dispensing_Y.Text = dy;
+                        tb_Dispensing_Z.Text = dz;
+                        break;
+                    case 1:
+                        textFileManager.SetValue(ColumnIndex.DISPENSING_FIRST_X, dx);
+                        textFileManager.SetValue(ColumnIndex.DISPENSING_FIRST_Y, dy);
+                        textFileManager.SetValue(ColumnIndex.DISPENSING_FIRST_Z, dz);
+                        tb_Dispensing_FirstX.Text = dx;
+                        tb_Dispensing_FirstY.Text = dy;
+                        tb_Dispensing_FirstZ.Text = dz;
+                        break;
+                    case 2:
+                        textFileManager.SetValue(ColumnIndex.DISPENSING_CAM_X, dx);
+                        textFileManager.SetValue(ColumnIndex.DISPENSING_CAM_Y, dy);
+                        textFileManager.SetValue(ColumnIndex.DISPENSING_CAM_Z, dz);
+                        tb_Dispensing_Cam_X.Text = dx;
+                        tb_Dispensing_Cam_Y.Text = dy;
+                        tb_Dispensing_Cam_Z.Text = dz;
+                        break;
+                    case 3:
+                        textFileManager.SetValue(ColumnIndex.MOLD_X, dx);
+                        textFileManager.SetValue(ColumnIndex.MOLD_Y, dy);
+                        textFileManager.SetValue(ColumnIndex.MOLD_Z, dz);
+                        tb_Mold_X.Text = dx;
+                        tb_Mold_Y.Text = dy;
+                        tb_Mold_Z.Text = dz;
+                        break;
+                    default:
+                        Logger.Log("Save Fail.");
+                        return;
+                }
 
-            // 각 항목에 대해 라벨과 버튼 추가
-            int yOffset = 10; // 시작 위치
-
-            for (int i = 0; i < xyzValues.Length; i++)
-            {
-                // XYZ 값
-                string name = xyzValues[i][0];
-                string pX = xyzValues[i][1];
-                string pY = xyzValues[i][2];
-                string pZ = xyzValues[i][3];
-
-                // 라벨 1: Name
-                Label lblName = new Label();
-                lblName.Text = name;
-                lblName.Size = new System.Drawing.Size(70, 20); // 너비 70, 높이 20
-                lblName.Location = new System.Drawing.Point(10, yOffset);
-                panel_SaveXYZ.Controls.Add(lblName);
-
-                // 라벨 2: X
-                Label lblX = new Label();
-                lblX.Text = pX;
-                lblX.AutoSize = true;
-                lblX.Size = new System.Drawing.Size(30, 20); // 너비 50, 높이 20
-                lblX.Location = new System.Drawing.Point(80, yOffset);
-                panel_SaveXYZ.Controls.Add(lblX);
-
-                // 라벨 3: Y
-                Label lblY = new Label();
-                lblY.Text = pY;
-                lblY.AutoSize = true;
-                lblY.Size = new System.Drawing.Size(30, 20);
-                lblY.Location = new System.Drawing.Point(125, yOffset);
-                panel_SaveXYZ.Controls.Add(lblY);
-
-                // 라벨 4: Z
-                Label lblZ = new Label();
-                lblZ.Text = pZ;
-                lblZ.AutoSize = true;
-                lblZ.Size = new System.Drawing.Size(30, 20);
-                lblZ.Location = new System.Drawing.Point(170, yOffset);
-                panel_SaveXYZ.Controls.Add(lblZ);
-
-                // 이동 버튼
-                System.Windows.Forms.Button btnMove = new System.Windows.Forms.Button();
-                btnMove.Text = "이동";
-                btnMove.Size = new System.Drawing.Size(40, 20);
-                btnMove.Tag = new string[] { pX, pY, pZ }; // X, Y, Z 값을 Tag에 저장
-                btnMove.Location = new System.Drawing.Point(210, yOffset - 5);
-                btnMove.Click += SequenceMove_Click; // 이벤트 핸들러 연결
-                panel_SaveXYZ.Controls.Add(btnMove);
-
-                // 삭제 버튼
-                System.Windows.Forms.Button btnDelete = new System.Windows.Forms.Button();
-                btnDelete.Text = "삭제";
-                btnDelete.Size = new System.Drawing.Size(40, 20);
-                btnDelete.Tag = i; // i(인덱스)를 Tag에 저장
-                btnDelete.Location = new System.Drawing.Point(260, yOffset - 5);
-                btnDelete.Click += DeleteXYZ_Click; // 이벤트 핸들러 연결
-                panel_SaveXYZ.Controls.Add(btnDelete);
-
-                // Y축 위치 업데이트 (다음 항목을 아래로 배치)
-                yOffset += 30; // 각 항목마다 30px씩 아래로 내려감
             }
 
         }
@@ -805,7 +910,7 @@ namespace MotorControl
             int index = (int)btn.Tag; // 버튼에 저장된 인덱스 가져오기
 
             textFileManager.DeleteXYZ(index); // 파일에서 해당 항목 삭제
-            UpdatePanel(); // UI 갱신
+            //UpdatePanel(); // UI 갱신
         }
 
         private void btn_HomeReturn_Click(object sender, EventArgs e)
@@ -888,7 +993,7 @@ namespace MotorControl
                     int[] camera_dispenser_distance = new int[3];
                     camera_dispenser_distance[0] = int.Parse(tb_Distance_X.Text);
                     camera_dispenser_distance[1] = int.Parse(tb_Distance_Y.Text);
-                    camera_dispenser_distance[2] = int.Parse(tb_Dispensing_Z.Text) - int.Parse(tb_Position_Z.Text);
+                    camera_dispenser_distance[2] = int.Parse(tb_Distance_Z.Text) - int.Parse(tb_Position_Z.Text);
                     //int test = 400;
                     //camera_dispenser_distance[2] = int.Parse(tb_Distance_Z.Text) + test;
 
@@ -963,9 +1068,9 @@ namespace MotorControl
                 MessageBox.Show("작업 중");
                 return;
             }
-            int pX = int.Parse(tb_Dispensing_X.Text);
-            int pY = int.Parse(tb_Dispensing_Y.Text);
-            int pZ = int.Parse(tb_Dispensing_Z.Text);
+            int pX = int.Parse(tb_Dispensing_FirstX.Text);
+            int pY = int.Parse(tb_Dispensing_FirstY.Text);
+            int pZ = int.Parse(tb_Dispensing_FirstZ.Text);
             int pX2 = int.Parse(tb_Dispensing_Cam_X.Text);
             int pY2 = int.Parse(tb_Dispensing_Cam_Y.Text);
             int pZ2 = int.Parse(tb_Dispensing_Cam_Z.Text);
@@ -1004,9 +1109,9 @@ namespace MotorControl
                 MessageBox.Show("작업 중");
                 return;
             }
-            int pX = int.Parse(tb_Dispensing_X.Text);
-            int pY = int.Parse(tb_Dispensing_Y.Text);
-            int pZ = int.Parse(tb_Dispensing_Z.Text);
+            int pX = int.Parse(tb_Dispensing_FirstX.Text);
+            int pY = int.Parse(tb_Dispensing_FirstY.Text);
+            int pZ = int.Parse(tb_Dispensing_FirstZ.Text);
             int pX2 = int.Parse(tb_Dispensing_Cam_X.Text);
             int pY2 = int.Parse(tb_Dispensing_Cam_Y.Text);
             int pZ2 = int.Parse(tb_Dispensing_Cam_Z.Text);
@@ -1061,45 +1166,43 @@ namespace MotorControl
 
         private void btn_Distance_OK_Click(object sender, EventArgs e)
         {
-            tb_Dispensing_Cam_X.Text = tb_Position_X.Text;
-            tb_Dispensing_Cam_Y.Text = tb_Position_Y.Text;
-            tb_Dispensing_Cam_Z.Text = tb_Position_Z.Text;
+            //tb_Dispensing_Cam_X.Text = tb_Position_X.Text;
+            //tb_Dispensing_Cam_Y.Text = tb_Position_Y.Text;
+            //tb_Dispensing_Cam_Z.Text = tb_Position_Z.Text;
 
-            tb_Distance_X.Text = (int.Parse(tb_Dispensing_X.Text) - int.Parse(tb_Dispensing_Cam_X.Text)).ToString();
-            tb_Distance_Y.Text = (int.Parse(tb_Dispensing_Y.Text) - int.Parse(tb_Dispensing_Cam_Y.Text)).ToString();
-            tb_Distance_Z.Text = (int.Parse(tb_Dispensing_Z.Text) - int.Parse(tb_Dispensing_Cam_Z.Text)).ToString();
-
-            btn_Distance_OK.Enabled = false;
+            tb_Distance_X.Text = (int.Parse(tb_Dispensing_FirstX.Text) - int.Parse(tb_Dispensing_Cam_X.Text)).ToString();
+            tb_Distance_Y.Text = (int.Parse(tb_Dispensing_FirstY.Text) - int.Parse(tb_Dispensing_Cam_Y.Text)).ToString();
+            tb_Distance_Z.Text = tb_Dispensing_FirstZ.Text;
         }
 
-        private void btn_Distance_Save_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                tb_Distance_X.Text = (int.Parse(tb_Dispensing_X.Text) - int.Parse(tb_Dispensing_Cam_X.Text)).ToString();
-                tb_Distance_Y.Text = (int.Parse(tb_Dispensing_Y.Text) - int.Parse(tb_Dispensing_Cam_Y.Text)).ToString();
-                tb_Distance_Z.Text = (int.Parse(tb_Dispensing_Z.Text) - int.Parse(tb_Dispensing_Cam_Z.Text)).ToString();
+        //private void btn_Distance_Save_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        tb_Distance_X.Text = (int.Parse(tb_Dispensing_FirstX.Text) - int.Parse(tb_Dispensing_Cam_X.Text)).ToString();
+        //        tb_Distance_Y.Text = (int.Parse(tb_Dispensing_FirstY.Text) - int.Parse(tb_Dispensing_Cam_Y.Text)).ToString();
+        //        tb_Distance_Z.Text = (int.Parse(tb_Dispensing_FirstZ.Text) - int.Parse(tb_Dispensing_Cam_Z.Text)).ToString();
 
-                textFileManager.SetValue(ColumnIndex.DISPENSING_X, tb_Dispensing_X.Text);
-                textFileManager.SetValue(ColumnIndex.DISPENSING_Y, tb_Dispensing_Y.Text);
-                textFileManager.SetValue(ColumnIndex.DISPENSING_Z, tb_Dispensing_Z.Text);
-                textFileManager.SetValue(ColumnIndex.DISPENSING_CAM_X, tb_Dispensing_Cam_X.Text);
-                textFileManager.SetValue(ColumnIndex.DISPENSING_CAM_Y, tb_Dispensing_Cam_Y.Text);
-                textFileManager.SetValue(ColumnIndex.DISPENSING_CAM_Z, tb_Dispensing_Cam_Z.Text);
-                MessageBox.Show("저장 완료");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+        //        textFileManager.SetValue(ColumnIndex.DISPENSING_X, tb_Dispensing_FirstX.Text);
+        //        textFileManager.SetValue(ColumnIndex.DISPENSING_Y, tb_Dispensing_FirstY.Text);
+        //        textFileManager.SetValue(ColumnIndex.DISPENSING_Z, tb_Dispensing_FirstZ.Text);
+        //        textFileManager.SetValue(ColumnIndex.DISPENSING_CAM_X, tb_Dispensing_Cam_X.Text);
+        //        textFileManager.SetValue(ColumnIndex.DISPENSING_CAM_Y, tb_Dispensing_Cam_Y.Text);
+        //        textFileManager.SetValue(ColumnIndex.DISPENSING_CAM_Z, tb_Dispensing_Cam_Z.Text);
+        //        MessageBox.Show("저장 완료");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //    }
 
-        }
+        //}
 
         private void btn_Dispensing_Position_Set_Click(object sender, EventArgs e)
         {
-            tb_Dispensing_X.Text = tb_Position_X.Text;
-            tb_Dispensing_Y.Text = tb_Position_Y.Text;
-            tb_Dispensing_Z.Text = tb_Position_Z.Text;
+            tb_Dispensing_FirstX.Text = tb_Position_X.Text;
+            tb_Dispensing_FirstY.Text = tb_Position_Y.Text;
+            tb_Dispensing_FirstZ.Text = tb_Position_Z.Text;
         }
 
         private void btn_Dispensing_Cam_Position_Set_Click(object sender, EventArgs e)
@@ -1112,9 +1215,9 @@ namespace MotorControl
         private void btn_Distance_Setting_Z_Click(object sender, EventArgs e)
         {
             int[] camera_dispenser_distance = new int[3];
-            camera_dispenser_distance[0] = int.Parse(tb_Dispensing_X.Text);
-            camera_dispenser_distance[1] = int.Parse(tb_Dispensing_Y.Text);
-            camera_dispenser_distance[2] = int.Parse(tb_Dispensing_Z.Text);
+            camera_dispenser_distance[0] = int.Parse(tb_Dispensing_FirstX.Text);
+            camera_dispenser_distance[1] = int.Parse(tb_Dispensing_FirstY.Text);
+            camera_dispenser_distance[2] = int.Parse(tb_Dispensing_FirstZ.Text);
 
             motorControlManager.Sequence(camera_dispenser_distance[0], camera_dispenser_distance[1], camera_dispenser_distance[2]);
             //btn_Distance_OK.Enabled = true;
@@ -1204,9 +1307,15 @@ namespace MotorControl
         public static int Dispensing_X { get; set; }
         public static int Dispensing_Y { get; set; }
         public static int Dispensing_Z { get; set; }
+        public static int Dispensing_First_X { get; set; }
+        public static int Dispensing_First_Y { get; set; }
+        public static int Dispensing_First_Z { get; set; }
         public static int Dispensing_Cam_X { get; set; }
         public static int Dispensing_Cam_Y { get; set; }
         public static int Dispensing_Cam_Z { get; set; }
+        public static int Mold_X { get; set; }
+        public static int Mold_Y { get; set; }
+        public static int Mold_Z { get; set; }
         public static string Path { get; set; }
 
     }

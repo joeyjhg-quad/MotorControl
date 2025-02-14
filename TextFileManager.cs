@@ -50,9 +50,15 @@ namespace MotorControl
                     writer.WriteLine("Dispensing_X 0");
                     writer.WriteLine("Dispensing_Y 0");
                     writer.WriteLine("Dispensing_Z 0");
+                    writer.WriteLine("Dispensing_First_X 0");
+                    writer.WriteLine("Dispensing_First_Y 0");
+                    writer.WriteLine("Dispensing_First_Z 0");
                     writer.WriteLine("Dispensing_Cam_X 0");
                     writer.WriteLine("Dispensing_Cam_Y 0");
                     writer.WriteLine("Dispensing_Cam_Z 0");
+                    writer.WriteLine("Mold_X 0");
+                    writer.WriteLine("Mold_Y 0");
+                    writer.WriteLine("Mold_Z 0");
                     writer.WriteLine("SaveXYZ 0");
                 }
             }
@@ -184,10 +190,16 @@ namespace MotorControl
         public const int DISPENSING_X = 12;
         public const int DISPENSING_Y = 13;
         public const int DISPENSING_Z = 14;
-        public const int DISPENSING_CAM_X = 15;
-        public const int DISPENSING_CAM_Y = 16;
-        public const int DISPENSING_CAM_Z = 17;
-        public const int SAVEXYZ = 18;
+        public const int DISPENSING_FIRST_X = 15;
+        public const int DISPENSING_FIRST_Y = 16;
+        public const int DISPENSING_FIRST_Z = 17;
+        public const int DISPENSING_CAM_X = 18;
+        public const int DISPENSING_CAM_Y = 19;
+        public const int DISPENSING_CAM_Z = 20;
+        public const int MOLD_X = 21;
+        public const int MOLD_Y = 22;
+        public const int MOLD_Z = 23;
+        public const int SAVEXYZ = 24;
     }
 
 }
