@@ -93,7 +93,7 @@ namespace MotorControl
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"Exception: {ex.Message}");
+                    Logger.Log($"Exception: {ex.Message}");
                 }
             }, token);
         }

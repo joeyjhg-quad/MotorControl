@@ -21,21 +21,17 @@
     <PackageReference Include="OpenCvSharp4.Extensions" Version="4.10.0.20241108" />
     <PackageReference Include="System.IO.Ports" Version="9.0.2" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Basler.Pylon">
-      <HintPath>..\..\MotorControl_WinForm\MotorControl_WinForm\bin\x64\Debug\Basler.Pylon.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 <ItemGroup>
     <Protobuf Include="Protos\bfxclient-app-service.proto" GrpcServices="Client" />
     <Protobuf Include="Protos\bfxclient-common.proto" GrpcServices="Client" />
 </ItemGroup>
+<ItemGroup>
+  <Reference Include="Basler.Pylon">
+    <HintPath>..\..\..\..\..\..\Program Files\Basler\pylon 7\Development\Assemblies\Basler.Pylon\x64\Basler.Pylon.dll</HintPath>
+  </Reference>
+</ItemGroup>
 
   <ItemGroup>
-    <None Update="Basler.Pylon.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
