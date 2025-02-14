@@ -58,7 +58,8 @@ namespace MotorControl
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                throw;
+                //MessageBox.Show(ex.ToString());
             }
 
         }

@@ -959,7 +959,7 @@ namespace MotorControl
                     currentPosition[0] = int.Parse(tb_Position_X.Text);
                     currentPosition[1] = int.Parse(tb_Position_Y.Text);
                     currentPosition[2] = int.Parse(tb_Position_Z.Text);
-                    int delay = int.Parse(tb_Dispensing_delay.Text);
+                    int delay = int.Parse(tb_Processing_delay.Text);
                     int N = int.Parse(tb_MoldCount.Text);
                     int MoldSpacing = int.Parse(tb_MoldSpacing.Text);
                     OpenCvSharp.Point[][] SelectedPoints = new OpenCvSharp.Point[N][];
@@ -1008,6 +1008,9 @@ namespace MotorControl
                 {
                     // 에러 메시지 로그 출력 또는 UI 알림
                     Logger.Log($"Error: {ex.Message}");
+                    threadManager.EmergencyStop();
+                    motorControlManager.EmergencyStop();
+                    isProcessingImg = false;
                 }
             });
 
